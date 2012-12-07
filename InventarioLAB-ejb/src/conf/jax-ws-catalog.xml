@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="https://www.academico.espol.edu.ec/services/directorioEspol.asmx?WSDL" uri="wsdl/www.academico.espol.edu.ec/services/directorioEspol.asmx.wsdl"/>
+    <system systemId="https://www.academico.espol.edu.ec/Services/wsSAAC.asmx?WSDL" uri="wsdl/www.academico.espol.edu.ec/Services/wsSAAC.asmx.wsdl"/>
+    <system systemId="file:/C:/Users/Windows/Documents/NetBeansProjects/InventarioLAB/InventarioLAB-ejb/src/conf/wsdl/www.academico.espol.edu.ec/services/directorioEspol.asmx.wsdl" uri="wsdl/directorioEspol.asmx.wsdl"/>
+</catalog>

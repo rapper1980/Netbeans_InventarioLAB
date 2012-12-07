@@ -1,0 +1,21 @@
+/* 
+    Document   : plantilla
+    Created on : 01-dic-2012, 17:51:02
+    Author     : Edward J. Holguín Holguín
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+h1 span.subtitulo{
+    line-height:60%;
+    font-size: 0.35em;
+}

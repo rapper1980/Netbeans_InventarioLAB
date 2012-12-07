@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <title>Login - InvetarioLAB</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Proyecto de Inventario" />
+        <meta name="author" content="Edward J. Holguín Holguín" />
+        
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/plantilla_login.css" />
+    </h:head>
+    <h:body>
+        <div id="pagina">
+            <div id="cabecera">
+                <div id="cabecera-in-izq">
+                    <div class="logo_FIEC">
+                        <a href="http://fiec.espol.edu.ec" target="_black" rel="Unidad Academica">
+                            <img src="imagenes/FIEC_logo.png" alt="Logo FIEC" width="140" height="44"/>
+                        </a>
+                    </div>
+                    <div class="logo_titulo_FIEC">
+                        <h1>
+                            FIEC<br />
+                            <span class="subtitulo">Faculta de Ingeniería en Electricidad y Computación</span>
+                        </h1>
+                    </div>
+                </div>
+                <div id="cabecera-in-der">
+                    <div class="logo_ESPOL">
+                        <a href="http://espol.edu.ec" target="_black" rel="Unidad Academica">
+                            <img src="imagenes/ESPOL_logo.png" alt="Logo FIEC" width="76" height="75" />
+                        </a>
+                    </div>
+                    <div class="logo_titulo_ESPOL">
+                        <h1>
+                            ESPOL<br />
+                            <span class="subtitulo">Escuela Superior Politécnica del Litoral</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div id="cuerpo">
+                <div id="cuerpo-in-izq">
+                    <h2>#{msjs.nombreLaboratorio}</h2>
+                    <h3>InventarioLAB</h3>
+                    <p>#{msjs.bienvenido}</p>
+                </div>
+                <div id="cuerpo-in-der">
+                    <div id="formulario_login">
+                        <h:form id="form_login" styleClass="form_login">
+                            <h2>Log In</h2>
+                            <div>
+                                <h:outputLabel id="lab_usuario" styleClass="lab_usuario" for="inp_usuario" value="Usuario"></h:outputLabel>
+                                <h:inputText id="inp_usuario" styleClass="inp_usuario" required="true" requiredMessage="Ingrese usuario ESPOL/Invetario" value="#{inventarioLABManagedBean.usuario.usuario}"></h:inputText>
+                                <h:outputLabel value="@espol.edu.ec"></h:outputLabel>
+                            </div>
+                            <div>
+                                <h:outputLabel id="lab_clave" styleClass="lab_clave" for="inp_clave" value="Clave"></h:outputLabel>
+                                <h:inputSecret id="inp_clave" styleClass="inp_clave" required="true" requiredMessage="La clave es requerida" value="#{inventarioLABManagedBean.usuario.clave}"></h:inputSecret>
+                            </div>
+                            <div>
+                                <h:outputLabel id="lab_tipo" styleClass="lab_tipo" for="inp_clave" value="Modo"></h:outputLabel>
+                                <h:selectOneMenu id="sel_tipo" styleClass="sel_tipo"></h:selectOneMenu>
+                            </div>
+                            <div>
+                                <a class="a_olvidar" href="http://espol.edu.ec">¿Olvidastes tu contraseña?</a>
+                                <h:commandButton styleClass="btn_login" value="Login" action="#{inventarioLABManagedBean.login()}"></h:commandButton>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <div id="pie">
+                <p>Desarrolladores:  <span id="j">Jennifer Bermeo</span> | <span id="g">Giani Carlo</span> | <span id="b">Brick Reyes</span> | <span id="e">Edward J. Holguín Holguín</span>
+                <br />Estudiantes de la <a href="http://espol.edu.ec">Escuela Superior Politecnica de Litoral (ESPOL)</a>
+                <br />JGBE © 2012. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </h:body>
+</html>
+

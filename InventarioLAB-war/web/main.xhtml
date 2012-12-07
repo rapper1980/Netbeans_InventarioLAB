@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="description" content="Proyecto de Inventario" />
+        <meta name="author" content="Edward J. Holguín Holguín" />
+        <title>Inventario LAB - Bienvenido!!</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/plantilla.css" />
+    </h:head>
+    <h:body>
+        <div id="pagina">
+            <div id="cabecera">
+                <div id="cabecera-in-izq">
+                    <h1>Inventario LAB <br />
+                        <span class="subtitulo">Sistema de Inventario y Prestamos de Equipos</span>
+                    </h1>
+                </div>
+                <div id="cabecera-in-der">
+                    <h:form>
+                        <div id="usuario_session">
+                            <h:outputText value="Edward Holguín" />
+                            <br />
+                            <h:outputText value="edwjholg" />
+                            <h:commandLink value="Logout" />
+                        </div>
+                    </h:form>
+                </div>
+            </div>
+            <div id="menu">
+                <ul id="menu">
+                    <li>Home</li>
+                    <li><a>Personal</a>
+                        <ul class="submenu">
+                            <li><a>Gestionar Personal</a></li>
+                            <li><a>Registrar</a></li>
+                        </ul>
+                    </li>
+                    <li><a>Equipos</a>
+                        <ul class="submenu">
+                            <li><a>Gestionar Equipos</a></li>
+                            <li><a>Registrar nuevo Equipo</a></li>
+                        </ul>
+                    </li>
+                    <li><a>Solicitudes</a>
+                        <ul class="submenu">
+                            <li><a>Gestionar Solicitudes</a></li>
+                            <li><a>Nueva Solicitud</a></li>
+                        </ul>
+                    </li>
+                    <li>Acerca de</li>
+                </ul>
+            </div>
+            <div id="cuerpo">
+                <ui:insert name="cuerpo">Contenido</ui:insert>
+            </div>
+            <div id="pie">
+            </div>
+        </div>
+    </h:body>
+</html>
+
