@@ -19,3 +19,56 @@ h1 span.subtitulo{
     line-height:60%;
     font-size: 0.35em;
 }
+
+#pagina{
+    width:  50em;
+    height: 36em;
+    margin: auto;
+    
+    padding: 1em 1.5em 2em 1.5em;
+    background: rgb(247, 247, 247);
+    border: 0.1em solid rgba(147, 184, 189,0.8);
+    border-radius: 0.5em;
+}
+
+#cabecera{
+    height: 4em;
+    margin-bottom: 0.5em;
+}
+
+#cabecera-in-izq{
+    width: 26em;
+    float: left;
+}
+
+#cabecera-in-der{
+    width: 22em;
+    float: right;
+}
+
+#cabecera-in-izq, #cabecera-in-der{
+    height: 4em;
+}
+
+#menu-contenedor{
+    clear: both;
+    height: 2em;
+}
+
+#cuerpo{
+    height: 28em;
+    border-top: 0.1em solid rgba(147, 184, 189,0.8);; 
+    border-bottom: 0.1em solid rgba(147, 184, 189,0.8);
+    padding-top: 0.1em;
+    padding-bottom: 1em;
+    
+}
+
+#pie{
+    height: 4em;
+    text-align: center;
+}
+
+#cabecera, #cuerpo, #pie{
+    width:  50em;
+}

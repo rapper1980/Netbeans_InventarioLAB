@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+
+    <body>
+
+        <ui:composition template="./principal.xhtml">
+
+            <ui:define name="cuerpo">
+                <h:form styleClass="buscar">
+                    <p:panel header="Filtros">
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <h:outputLabel value="Codigo" />
+                            <h:inputText />
+
+                            <h:outputLabel value="Serie" />
+                            <h:inputText />
+
+                            <h:outputLabel value="Estado" />
+                            <h:inputText />
+
+                            <h:outputLabel value="Tipo" />
+                            <h:inputText />
+
+                        </h:panelGrid>
+                    </p:panel>
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

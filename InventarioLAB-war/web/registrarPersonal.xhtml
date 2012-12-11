@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="./main.xhtml">
+
+    <ui:define name="cuerpo">
+        <h:outputStylesheet name="estilo">
+            .col1 { vertical-align:top; }
+            .col2 { vertical-align:top; width:450px; }
+            .wizard { width:400px; }
+            .wform td { vertical-align:top; }
+            .wfcol1 { text-align: right; white-space:nowrap;}
+            .wfcol2 { }
+            .wfcol3 { }
+            .s1row td { height:30px; }
+            .rich-message { color:red; }
+
+            .navPanel {
+            position:absolute;
+            bottom:0;
+            height:23px;
+            margin:0;
+            padding:2px;
+            }
+
+        </h:outputStylesheet>
+        <rich:panel>
+            <f:facet name="header">
+                <h:outputText value="Informacion del Ususario" />
+            </f:facet>
+            <h:form>
+                <h:panelGrid columns="3">
+                    <rich:validator>
+                        <h:outputText value="matricula" />
+                        <h:inputText label="matricula" id="matricula"
+                                     value="#{personalBean.infoEstudinate.matricula}">
+                        </h:inputText>
+                        <rich:message for="matricula" ajaxRendered="true" />
+
+                        <h:outputText value="Identificacion" />
+                        <h:inputText label="identificacion" id="identificacion"
+                                     value="#{personalBean.infoEstudinate.identificacion}">
+                            <f:validateLength maximum="13" />
+                        </h:inputText>
+                        <rich:message for="identificacion" ajaxRendered="true" />
+                    </rich:validator>
+                    <rich:notifyMessages stayTime="2000" nonblocking="true" />
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Validar Estudiante" />
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:panel>
+
+        <h:panelGrid width="100%" columns="2" columnClasses="col1,col2">
+            <rich:panel styleClass="wizard">
+                <f:facet name="header">
+                    <h:outputText value="Informacion del Usuario" />
+                </f:facet>
+                <h:form>
+                    <rich:togglePanel switchType="ajax">
+                        <rich:togglePanelItem>
+                            <ui:include src="/wizards/wzRegistrarPersonal1.xhtml" />
+                        </rich:togglePanelItem>
+                        <rich:togglePanelItem>
+                            <ui:include src="/wizards/wzRegistrarPersonal2.xhtml" />
+                        </rich:togglePanelItem>
+                        <rich:togglePanelItem>
+                            <ui:include src="/wizards/wzRegistrarPersonal3.xhtml" />
+                        </rich:togglePanelItem>
+                    </rich:togglePanel>
+                </h:form>
+            </rich:panel>
+
+        </h:panelGrid>
+    </ui:define>
+
+</ui:composition>

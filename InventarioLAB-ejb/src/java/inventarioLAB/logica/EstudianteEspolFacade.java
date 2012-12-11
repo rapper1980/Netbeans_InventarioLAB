@@ -4,6 +4,7 @@
  */
 package inventarioLAB.logica;
 
+import inventarioLAB.logica.beansAdicionales.InformacionEstudianteESPOL;
 import inventarioLAB.entidades.EstudianteEspol;
 import inventarioLAB.webServicesClient.ESPOL_SAAC.InformacionAcademicaEstudianteGetResponse.InformacionAcademicaEstudianteGetResult;
 import inventarioLAB.webServicesClient.ESPOL_SAAC.WsSAAC;

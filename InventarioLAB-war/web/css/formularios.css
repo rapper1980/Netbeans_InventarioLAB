@@ -1,0 +1,25 @@
+/* 
+    Document   : formularios
+    Created on : 10-dic-2012, 2:42:50
+    Author     : Edward J. Holguín Holguín
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.buscar label{
+    float: left;
+    clear:both;
+}
+
+.buscar input{
+    float: right;
+}
+
+.buscar div{
+    width: 18em;
+    height: 2em;
+}

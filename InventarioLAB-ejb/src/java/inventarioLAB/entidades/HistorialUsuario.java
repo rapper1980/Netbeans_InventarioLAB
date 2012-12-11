@@ -39,6 +39,10 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HistorialUsuario.findByUsuarioModificacion", query = "SELECT h FROM HistorialUsuario h WHERE h.usuarioModificacion = :usuarioModificacion"),
     @NamedQuery(name = "HistorialUsuario.findByObservacion", query = "SELECT h FROM HistorialUsuario h WHERE h.observacion = :observacion")})
 public class HistorialUsuario implements Serializable {
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 20)
+    @Column(name = "email")
+    private String email;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -219,6 +223,14 @@ public class HistorialUsuario implements Serializable {
     @Override
     public String toString() {
         return "inventarioLAB.entidades.HistorialUsuario[ id=" + id + " ]";
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
     
 }

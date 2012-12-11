@@ -2,7 +2,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      >
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="description" content="Proyecto de Inventario" />
@@ -31,35 +35,72 @@
                     </h:form>
                 </div>
             </div>
-            <div id="menu">
-                <ul id="menu">
-                    <li>Home</li>
-                    <li><a>Personal</a>
-                        <ul class="submenu">
-                            <li><a>Gestionar Personal</a></li>
-                            <li><a>Registrar</a></li>
-                        </ul>
-                    </li>
-                    <li><a>Equipos</a>
-                        <ul class="submenu">
-                            <li><a>Gestionar Equipos</a></li>
-                            <li><a>Registrar nuevo Equipo</a></li>
-                        </ul>
-                    </li>
-                    <li><a>Solicitudes</a>
-                        <ul class="submenu">
-                            <li><a>Gestionar Solicitudes</a></li>
-                            <li><a>Nueva Solicitud</a></li>
-                        </ul>
-                    </li>
-                    <li>Acerca de</li>
-                </ul>
+
+            <div id="menu-contenedor">
+                <h:form>
+                    <rich:toolbar>
+                        
+                        <rich:dropDownMenu mode="ajax">
+                            <f:facet name="label">
+                                <h:panelGroup>
+                                    <!-- <h:graphicImage value="/images/icons/copy.gif" styleClass="pic" alt="copy" /> -->
+                                    <h:outputText value="Home" />
+                                </h:panelGroup>
+                            </f:facet>
+                        </rich:dropDownMenu>
+
+                        <rich:dropDownMenu mode="ajax">
+                            <f:facet name="label">
+                                <h:panelGrid>
+                                    <h:outputText value="Personal" />
+                                </h:panelGrid>
+                            </f:facet>
+                            <rich:menuItem submitMode="client" onclick="">
+                                <h:outputText value="Gestionar Personal" />
+                            </rich:menuItem>
+                            <rich:menuItem submitMode="client"
+                                           onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261'">
+                                <h:outputText value="Registrar Personal" />
+                            </rich:menuItem>
+                        </rich:dropDownMenu>
+
+                        <rich:dropDownMenu mode="ajax">
+                            <f:facet name="label">
+                                <h:panelGrid>
+                                    <h:outputText value="Equipos" />
+                                </h:panelGrid>
+                            </f:facet>
+                            <rich:menuItem submitMode="client" onclick="">
+                                <h:outputText value="Gestionar Equipos" />
+                            </rich:menuItem>
+                            <rich:menuItem submitMode="client"
+                                           onclick="">
+                                <h:outputText value="Registrar Equipo" />
+                            </rich:menuItem>
+                        </rich:dropDownMenu>
+                        
+                        <rich:dropDownMenu mode="ajax">
+                            <f:facet name="label">
+                                <h:panelGrid>
+                                    <h:outputText value="Solicitudes" />
+                                </h:panelGrid>
+                            </f:facet>
+                            <rich:menuItem submitMode="client" onclick="">
+                                <h:outputText value="Gestionar Solicitud" />
+                            </rich:menuItem>
+                            <rich:menuItem submitMode="client" onclick="">
+                                <h:outputText value="Nueva Solicitud" />
+                            </rich:menuItem>
+                        </rich:dropDownMenu>
+                    </rich:toolbar>
+                </h:form>
+
             </div>
+
             <div id="cuerpo">
                 <ui:insert name="cuerpo">Contenido</ui:insert>
             </div>
-            <div id="pie">
-            </div>
+
         </div>
     </h:body>
 </html>

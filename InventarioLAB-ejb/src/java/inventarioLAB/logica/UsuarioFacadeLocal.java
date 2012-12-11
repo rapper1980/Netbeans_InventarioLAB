@@ -5,6 +5,7 @@
 package inventarioLAB.logica;
 
 import inventarioLAB.entidades.Usuario;
+import inventarioLAB.logica.beansAdicionales.InformacionEstudianteESPOL;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -32,5 +33,7 @@ public interface UsuarioFacadeLocal {
     boolean autenticar(Usuario usuario);
     
     boolean existeSuperUsuario();
+
+    public InformacionEstudianteESPOL obtenerInformacionAcademicaEstudianteESPOL(String identificacion, String matricula);
     
 }
