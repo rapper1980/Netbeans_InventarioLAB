@@ -18,25 +18,5 @@ import javax.faces.bean.SessionScoped;
 @ManagedBean(name="inventarioLABManagedBean")
 @SessionScoped
 public class InventarioLABManagedBean {
-    @EJB
-    private UsuarioFacadeLocal usuarioFacadeLocal;
-    private Usuario usuario;
-
-    /** Creates a new instance of InventarioLABManagedBean */
-    public InventarioLABManagedBean() {
-        this.usuario = new Usuario();
-        this.usuarioFacadeLocal = new UsuarioFacade();
-    }
     
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-    
-    public String login(){
-        return this.usuarioFacadeLocal.autenticar(usuario)? "main" : "error";
-    }
 }

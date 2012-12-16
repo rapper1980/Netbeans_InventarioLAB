@@ -26,16 +26,8 @@ public class InformacionEstudianteESPOL {
     private double promedioCarrera;
     private int num_Matarias_Aprobadas;
     private String unidadAcademica;
-    private String fecha_nacienmiento;
+    private String fecha_nacimiento;
     private String registrado;
-
-    public String getRegistrado() {
-        return registrado;
-    }
-
-    public void setRegistrado(String registrado) {
-        this.registrado = registrado;
-    }
 
     public InformacionEstudianteESPOL() {
     }
@@ -136,17 +128,25 @@ public class InformacionEstudianteESPOL {
         this.unidadAcademica = unidadAcademica;
     }
 
-    public String getFecha_nacienmiento() {
-        return fecha_nacienmiento;
+    public String getFecha_nacimiento() {
+        return fecha_nacimiento;
     }
 
-    public void setFecha_nacienmiento(String fecha_nacienmiento) {
-        this.fecha_nacienmiento = fecha_nacienmiento;
+    public void setFecha_nacimiento(String fecha_nacimiento) {
+        this.fecha_nacimiento = fecha_nacimiento;
     }
 
+    public String getRegistrado() {
+        return registrado;
+    }
+
+    public void setRegistrado(String registrado) {
+        this.registrado = registrado;
+    }
+    
     @Override
     public String toString() {
-        return "InformacionEstudianteESPOL{" + "matricula=" + matricula + ", tipo_identif=" + tipo_identif + ", identificacion=" + identificacion + ", estado=" + estado + ", apellidos=" + apellidos + ", nombres=" + nombres + ", factor_p=" + factor_p + ", nombreCarrera=" + nombreCarrera + ", email=" + email + ", promedioCarrera=" + promedioCarrera + ", num_Matarias_Aprobadas=" + num_Matarias_Aprobadas + ", unidadAcademica=" + unidadAcademica + ", fecha_nacienmiento=" + fecha_nacienmiento + ", registrado=" + registrado + '}';
+        return "InformacionEstudianteESPOL{" + "matricula=" + matricula + ", tipo_identif=" + tipo_identif + ", identificacion=" + identificacion + ", estado=" + estado + ", apellidos=" + apellidos + ", nombres=" + nombres + ", factor_p=" + factor_p + ", nombreCarrera=" + nombreCarrera + ", email=" + email + ", promedioCarrera=" + promedioCarrera + ", num_Matarias_Aprobadas=" + num_Matarias_Aprobadas + ", unidadAcademica=" + unidadAcademica + ", fecha_nacimiento=" + fecha_nacimiento + ", registrado=" + registrado + '}';
     }
     
 }

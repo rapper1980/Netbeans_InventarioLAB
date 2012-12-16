@@ -35,22 +35,22 @@
             <h:form>
                 <h:panelGrid columns="3">
                     <rich:validator>
-                        <h:outputText value="matricula" />
+                        <h:outputText value="Matricula" />
                         <h:inputText label="matricula" id="matricula"
-                                     value="#{personalBean.infoEstudinate.matricula}">
+                                     value="#{usuarioManageBean.infoEstudiante.matricula}">
                         </h:inputText>
                         <rich:message for="matricula" ajaxRendered="true" />
 
                         <h:outputText value="Identificacion" />
                         <h:inputText label="identificacion" id="identificacion"
-                                     value="#{personalBean.infoEstudinate.identificacion}">
+                                     value="#{usuarioManageBean.infoEstudiante.identificacion}">
                             <f:validateLength maximum="13" />
                         </h:inputText>
                         <rich:message for="identificacion" ajaxRendered="true" />
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">
-                        <a4j:commandButton value="Validar Estudiante" />
+                        <a4j:commandButton value="Validar Estudiante" action="#{usuarioManageBean.verificarInfoEstiduante()}"/>
                     </f:facet>
                 </h:panelGrid>
             </h:form>

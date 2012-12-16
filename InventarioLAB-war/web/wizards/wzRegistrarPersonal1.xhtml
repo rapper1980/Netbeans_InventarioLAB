@@ -7,23 +7,33 @@
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich">
  
-    <div style="position: relative; height: 140px">
+    <div style="position: relative; height: 18em;">
         
-        <h:panelGrid rowClasses="s1row" columns="3" columnClasses="wfcol1,wfcol2,wfcol3">
+        <h:panelGrid rowClasses="s1row" columns="2" columnClasses="wfcol1,wfcol2,wfcol3">
             <h:outputText value="Matricula:" />
-            <h:inputText id="fn" value="#{profile.firstName}" label="First Name" required="true" />
-            <rich:message for="fn" />
- 
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.matricula}" />
             <h:outputText value="Identificacion:" />
-            <h:inputText id="ln" value="#{profile.lastName}" label="Last Name" required="true" />
-            <rich:message for="ln" />
- 
-            <h:outputText value="Company:" />
-            <h:inputText id="comp" value="#{profile.company}" label="Company" required="true" />
-            <rich:message for="comp" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.tipo_identif}" />
+            <h:outputText value="Nombres y Apellidos:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.nombres}" />
+            <h:outputText value="Fecha de Nacimiento:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.fecha_nacimiento}" />
+            <h:outputText value="Email:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.email}" />
+            <h:outputText value="Unidad Academica:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.unidadAcademica}" />
+            <h:outputText value="Carrera:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.nombreCarrera}" />
+            <h:outputText value="Promedio:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.promedioCarrera}" />
+            <h:outputText value="Estado:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.estado}" />
+            <h:outputText value="Registrado:" />
+            <h:outputText value="#{usuarioManageBean.infoEstudiante.registrado}" />
+            
         </h:panelGrid>
         <div class="navPanel" style="width: 100%;">
-            <a4j:commandButton style="float:right" value="Next &gt;&gt;">
+            <a4j:commandButton style="float:right" value="Siguiente &gt;&gt;">
                 <rich:toggleControl targetItem="@next" event="click" />
             </a4j:commandButton>
         </div>

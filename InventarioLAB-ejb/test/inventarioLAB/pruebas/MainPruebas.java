@@ -183,7 +183,7 @@ public class MainPruebas {
                 info.setUnidadAcademica(tag.getTextContent().trim());
             }
             if ("FECHA_NACIM".equals(attribute_tag)){
-                info.setFecha_nacienmiento(tag.getTextContent().trim());
+                info.setFecha_nacimiento(tag.getTextContent().trim());
             }
        }
         

@@ -33,18 +33,13 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TipoEquipo.findAll", query = "SELECT t FROM TipoEquipo t"),
     @NamedQuery(name = "TipoEquipo.findByIdTipoEquipo", query = "SELECT t FROM TipoEquipo t WHERE t.idTipoEquipo = :idTipoEquipo"),
     @NamedQuery(name = "TipoEquipo.findByDescripcion", query = "SELECT t FROM TipoEquipo t WHERE t.descripcion = :descripcion"),
-    @NamedQuery(name = "TipoEquipo.findByPrestar", query = "SELECT t FROM TipoEquipo t WHERE t.prestar = :prestar")})
+    @NamedQuery(name = "TipoEquipo.findByPrestar", query = "SELECT t FROM TipoEquipo t WHERE t.prestar = :prestar"),
+    @NamedQuery(name = "TipoEquipo.findByAutorizacion", query = "SELECT t FROM TipoEquipo t WHERE t.autorizacion = :autorizacion")})
 public class TipoEquipo implements Serializable {
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "autorizacion")
-    private String autorizacion;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_tipo_equipo")
     private Integer idTipoEquipo;
     @Basic(optional = false)
@@ -57,6 +52,11 @@ public class TipoEquipo implements Serializable {
     @Size(min = 1, max = 1)
     @Column(name = "prestar")
     private String prestar;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 1)
+    @Column(name = "autorizacion")
+    private String autorizacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoEquipo")
     private Collection<Equipo> equipoCollection;
 
@@ -67,10 +67,11 @@ public class TipoEquipo implements Serializable {
         this.idTipoEquipo = idTipoEquipo;
     }
 
-    public TipoEquipo(Integer idTipoEquipo, String descripcion, String prestar) {
+    public TipoEquipo(Integer idTipoEquipo, String descripcion, String prestar, String autorizacion) {
         this.idTipoEquipo = idTipoEquipo;
         this.descripcion = descripcion;
         this.prestar = prestar;
+        this.autorizacion = autorizacion;
     }
 
     public Integer getIdTipoEquipo() {
@@ -95,6 +96,14 @@ public class TipoEquipo implements Serializable {
 
     public void setPrestar(String prestar) {
         this.prestar = prestar;
+    }
+
+    public String getAutorizacion() {
+        return autorizacion;
+    }
+
+    public void setAutorizacion(String autorizacion) {
+        this.autorizacion = autorizacion;
     }
 
     @XmlTransient
@@ -129,14 +138,6 @@ public class TipoEquipo implements Serializable {
     @Override
     public String toString() {
         return "inventarioLAB.entidades.TipoEquipo[ idTipoEquipo=" + idTipoEquipo + " ]";
-    }
-
-    public String getAutorizacion() {
-        return autorizacion;
-    }
-
-    public void setAutorizacion(String autorizacion) {
-        this.autorizacion = autorizacion;
     }
     
 }

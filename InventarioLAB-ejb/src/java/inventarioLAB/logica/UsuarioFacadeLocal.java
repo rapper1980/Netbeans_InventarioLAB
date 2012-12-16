@@ -6,6 +6,7 @@ package inventarioLAB.logica;
 
 import inventarioLAB.entidades.Usuario;
 import inventarioLAB.logica.beansAdicionales.InformacionEstudianteESPOL;
+import inventarioLAB.logica.excepciones.InsercionIlegal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,10 +31,25 @@ public interface UsuarioFacadeLocal {
 
     int count();
     
-    boolean autenticar(Usuario usuario);
+    void crear(Usuario usuario) throws InsercionIlegal;
+    
+    void editar(Usuario usuario);
+    
+    void inactiva(Usuario usuario);
+    
+    Usuario obtenerUsuario(Usuario usuario, String estado);
+    
+    List<Usuario> obtenerUsuarios();
+    
+    List<Usuario> obtenerUsuarios(String estado);
+    
+    List<Usuario> obtenerUsuarios(String rol, String estado);
+    
+    Usuario autenticar(Usuario usuario);
     
     boolean existeSuperUsuario();
 
-    public InformacionEstudianteESPOL obtenerInformacionAcademicaEstudianteESPOL(String identificacion, String matricula);
+    InformacionEstudianteESPOL obtenerInformacionAcademicaEstudianteESPOL(String identificacion, String matricula);
+
     
 }

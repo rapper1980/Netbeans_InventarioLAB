@@ -49,7 +49,6 @@ public class SolicitudPrestamo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_solicitud_prestamo")
     private Integer idSolicitudPrestamo;
     @Basic(optional = false)

@@ -42,15 +42,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Usuario.findByFechaIngreso", query = "SELECT u FROM Usuario u WHERE u.fechaIngreso = :fechaIngreso"),
     @NamedQuery(name = "Usuario.findByFechaModificacion", query = "SELECT u FROM Usuario u WHERE u.fechaModificacion = :fechaModificacion"),
     @NamedQuery(name = "Usuario.findByUsuarioModificacion", query = "SELECT u FROM Usuario u WHERE u.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Usuario.findByRolEstado", query = "SELECT u FROM Usuario u WHERE u.rol = :rol"
-                                                        + " AND u.estado = :estado")})
+    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
 public class Usuario implements Serializable {
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "email")
-    private String email;
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -91,6 +84,12 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 15)
     @Column(name = "usuario_modificacion")
     private String usuarioModificacion;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
+    @Column(name = "email")
+    private String email;
     @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
     @ManyToOne(optional = false)
     private Persona idPersona;
@@ -104,7 +103,7 @@ public class Usuario implements Serializable {
         this.usuario = usuario;
     }
 
-    public Usuario(String usuario, String estado, String modoAutenticacion, String rol, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion) {
+    public Usuario(String usuario, String estado, String modoAutenticacion, String rol, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion, String email) {
         this.usuario = usuario;
         this.estado = estado;
         this.modoAutenticacion = modoAutenticacion;
@@ -112,6 +111,7 @@ public class Usuario implements Serializable {
         this.fechaIngreso = fechaIngreso;
         this.fechaModificacion = fechaModificacion;
         this.usuarioModificacion = usuarioModificacion;
+        this.email = email;
     }
 
     public String getUsuario() {
@@ -178,6 +178,14 @@ public class Usuario implements Serializable {
         this.usuarioModificacion = usuarioModificacion;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Persona getIdPersona() {
         return idPersona;
     }
@@ -218,14 +226,6 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "inventarioLAB.entidades.Usuario[ usuario=" + usuario + " ]";
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
     
 }

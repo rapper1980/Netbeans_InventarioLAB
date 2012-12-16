@@ -27,10 +27,12 @@
                 <div id="cabecera-in-der">
                     <h:form>
                         <div id="usuario_session">
-                            <h:outputText value="Edward Holguín" />
+                            <h:outputText value="Bienvenido, " />
+                            <h:outputText value="#{usuarioManageBean.usuarioSesion.idPersona.nombres}" />
+                            <h:outputText value="#{usuarioManageBean.usuarioSesion.idPersona.apellidos}" />
                             <br />
-                            <h:outputText value="edwjholg" />
-                            <h:commandLink value="Logout" />
+                            <h:outputText value="#{usuarioManageBean.usuarioSesion.usuario}" />
+                            <h:commandLink value="#{usuarioManageBean.salir()}" />
                         </div>
                     </h:form>
                 </div>

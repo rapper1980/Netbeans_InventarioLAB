@@ -38,14 +38,12 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Equipo.findByModelo", query = "SELECT e FROM Equipo e WHERE e.modelo = :modelo"),
     @NamedQuery(name = "Equipo.findByPrecio", query = "SELECT e FROM Equipo e WHERE e.precio = :precio"),
     @NamedQuery(name = "Equipo.findByUbicacion", query = "SELECT e FROM Equipo e WHERE e.ubicacion = :ubicacion"),
-    @NamedQuery(name = "Equipo.findByEstado", query = "SELECT e FROM Equipo e WHERE e.estado = :estado"),
-    @NamedQuery(name = "Equipo.findByAutorizacion", query = "SELECT e FROM Equipo e WHERE e.autorizacion = :autorizacion")})
+    @NamedQuery(name = "Equipo.findByEstado", query = "SELECT e FROM Equipo e WHERE e.estado = :estado")})
 public class Equipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id_equipo")
     private Integer idEquipo;
     @Size(max = 15)
@@ -78,11 +76,6 @@ public class Equipo implements Serializable {
     @Size(min = 1, max = 3)
     @Column(name = "estado")
     private String estado;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "autorizacion")
-    private String autorizacion;
     @JoinColumn(name = "id_tipo_equipo", referencedColumnName = "id_tipo_equipo")
     @ManyToOne(optional = false)
     private TipoEquipo idTipoEquipo;
@@ -94,12 +87,11 @@ public class Equipo implements Serializable {
         this.idEquipo = idEquipo;
     }
 
-    public Equipo(Integer idEquipo, String codigo, String nombre, String estado, String autorizacion) {
+    public Equipo(Integer idEquipo, String codigo, String nombre, String estado) {
         this.idEquipo = idEquipo;
         this.codigo = codigo;
         this.nombre = nombre;
         this.estado = estado;
-        this.autorizacion = autorizacion;
     }
 
     public Integer getIdEquipo() {
@@ -172,14 +164,6 @@ public class Equipo implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getAutorizacion() {
-        return autorizacion;
-    }
-
-    public void setAutorizacion(String autorizacion) {
-        this.autorizacion = autorizacion;
     }
 
     public TipoEquipo getIdTipoEquipo() {

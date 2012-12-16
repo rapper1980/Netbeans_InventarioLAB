@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "EstudianteEspol.findByCodDivision", query = "SELECT e FROM EstudianteEspol e WHERE e.codDivision = :codDivision"),
     @NamedQuery(name = "EstudianteEspol.findByCodCarrera", query = "SELECT e FROM EstudianteEspol e WHERE e.codCarrera = :codCarrera"),
     @NamedQuery(name = "EstudianteEspol.findByCodEspecializacion", query = "SELECT e FROM EstudianteEspol e WHERE e.codEspecializacion = :codEspecializacion"),
+    @NamedQuery(name = "EstudianteEspol.findByNombreCarrera", query = "SELECT e FROM EstudianteEspol e WHERE e.nombreCarrera = :nombreCarrera"),
     @NamedQuery(name = "EstudianteEspol.findByEmail", query = "SELECT e FROM EstudianteEspol e WHERE e.email = :email")})
 public class EstudianteEspol implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -64,10 +65,11 @@ public class EstudianteEspol implements Serializable {
     @Size(min = 1, max = 5)
     @Column(name = "cod_especializacion")
     private String codEspecializacion;
+    @Size(max = 100)
+    @Column(name = "nombre_carrera")
+    private String nombreCarrera;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(max = 20)
     @Column(name = "email")
     private String email;
     @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", insertable = false, updatable = false)
@@ -81,13 +83,12 @@ public class EstudianteEspol implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public EstudianteEspol(Integer idPersona, String codUnidad, String codDivision, String codCarrera, String codEspecializacion, String email) {
+    public EstudianteEspol(Integer idPersona, String codUnidad, String codDivision, String codCarrera, String codEspecializacion) {
         this.idPersona = idPersona;
         this.codUnidad = codUnidad;
         this.codDivision = codDivision;
         this.codCarrera = codCarrera;
         this.codEspecializacion = codEspecializacion;
-        this.email = email;
     }
 
     public Integer getIdPersona() {
@@ -136,6 +137,14 @@ public class EstudianteEspol implements Serializable {
 
     public void setCodEspecializacion(String codEspecializacion) {
         this.codEspecializacion = codEspecializacion;
+    }
+
+    public String getNombreCarrera() {
+        return nombreCarrera;
+    }
+
+    public void setNombreCarrera(String nombreCarrera) {
+        this.nombreCarrera = nombreCarrera;
     }
 
     public String getEmail() {
