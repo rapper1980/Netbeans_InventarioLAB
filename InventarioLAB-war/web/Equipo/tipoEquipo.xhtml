@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="./../main.xhtml">
+
+    <ui:define name="cuerpo">
+        <h:outputStylesheet>
+            a.no-decor>img {
+            border: none;
+            }
+        </h:outputStylesheet>
+        <rich:panel header="Nuevo Tipo Equipo" >
+            <h:form id="crear_tipoEquipo">
+                <h:panelGrid columns="3">
+                    <rich:validator>
+                        <h:outputText value="Descripcion" />
+                        <h:inputText label="descripcion" id="descripcion"
+                                     value="#{tipoEquipoManagedBean.tipoEquipo.descripcion}">
+                            <f:validateLength maximum="13" />
+                        </h:inputText>
+                        <rich:message for="descripcion" ajaxRendered="true" />
+
+                        <h:outputText value="Autorizacion" />
+                        <h:inputText label="autorizacion" id="autorizacion"
+                                     value="#{tipoEquipoManagedBean.tipoEquipo.autorizacion}">
+                        </h:inputText>
+                        <rich:message for="autorizacion" ajaxRendered="true" />
+
+                        <h:outputText value="Prestar" />
+                        <h:inputText label="prestar" id="prestar"
+                                     value="#{tipoEquipoManagedBean.tipoEquipo.prestar}">
+                        </h:inputText>
+                        <rich:message for="prestar" ajaxRendered="true" />
+
+                    </rich:validator>
+                    <rich:notifyMessages stayTime="2000" nonblocking="true" />
+                    <f:facet name="footer">                        
+                        <a4j:commandButton value="Registrar Tipo de equipo" action="#{tipoEquipoManagedBean.registrarTipoEquipo()}" render="table"/>
+                    </f:facet>
+                </h:panelGrid>
+            </h:form>
+        </rich:panel>
+        <h2>Lista de Tipo de Equipo</h2>
+        <a4j:status onstart="#{rich:component('statPane')}.show(); #{tipoEquipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
+        <rich:dataTable value="#{tipoEquipoManagedBean.getTodosTipos()}" var="tipo" iterationStatusVar="it" id="table" rows="30">
+            <rich:column>
+                <f:facet name="header">#</f:facet>
+                #{it.index}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Descripcion</f:facet>
+                <h:outputText value="#{tipo.descripcion}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Autorizacion</f:facet>
+                <h:outputText value="#{tipo.autorizacion}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Prestar</f:facet>
+                <h:outputText value="#{tipo.prestar}" />
+            </rich:column>
+            <rich:column>
+                <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
+                                 oncomplete="#{rich:component('confirmPane')}.show()">
+                    <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
+                    <a4j:param value="#{it.index}" assignTo="#{tipoEquipoManagedBean.currentIndex}" />
+                </a4j:commandLink>
+            </rich:column>
+        </rich:dataTable>
+    </ui:define>
+</ui:composition>

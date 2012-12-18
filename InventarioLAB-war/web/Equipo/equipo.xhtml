@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="./../main.xhtml">
+
+    <ui:define name="cuerpo">
+        <h:form id="crear_equipo">
+            <rich:panel header="Registro de Equipo">
+                <h:panelGrid columns="6">
+                    <rich:validator>
+                        <h:outputText value="Codigo" />
+                        <h:inputText label="serie" id="codigo"
+                                     value="#{equipoManagedBean.selected.codigo}">
+                        </h:inputText>
+                        <rich:message for="codigo" ajaxRendered="true" />
+
+                        <h:outputText value="Serie" />
+                        <h:inputText label="serie" id="serie"
+                                     value="#{equipoManagedBean.selected.serie}">
+                        </h:inputText>
+                        <rich:message for="serie" ajaxRendered="true" />
+
+                        <h:outputText value="Nombre" />
+                        <h:inputText label="nombre" id="nombre"
+                                     value="#{equipoManagedBean.selected.nombre}">
+                            <f:validateLength maximum="13" />
+                        </h:inputText>
+                        <rich:message for="nombre" ajaxRendered="true" />
+
+                        <h:outputText value="Precio" />
+                        <h:inputText label="precio" id="precio"
+                                     value="#{equipoManagedBean.selected.precio}">
+                        </h:inputText>
+                        <rich:message for="precio" ajaxRendered="true" />                                                
+
+                        <h:outputText value="Tipo de Equipo" />
+                        <h:selectOneMenu id="idTipoEquipo" value="#{equipoManagedBean.selected.idTipoEquipo}" style="width:12em;" required="true">
+                            <f:selectItems value="#{tipoEquipoManagedBean.itemsAvailableSelectOne}"/>
+                        </h:selectOneMenu>
+
+                        <rich:message for="idTipoEquipo" ajaxRendered="true" />
+
+                        <h:outputText value="Marca" />
+                        <h:inputText label="marca" id="marca"
+                                     value="#{equipoManagedBean.selected.marca}">
+                        </h:inputText>
+                        <rich:message for="marca" ajaxRendered="true" />
+
+                        <h:outputText value="Modelo" />
+                        <h:inputText label="modelo" id="modelo"
+                                     value="#{equipoManagedBean.selected.modelo}">
+                        </h:inputText>
+                        <rich:message for="modelo" ajaxRendered="true" />
+
+                        <h:outputText value="Estado" />
+                        <h:inputText label="estado" id="estadi"
+                                     value="#{equipoManagedBean.selected.estado}">
+                        </h:inputText>
+                        <rich:message for="estado" ajaxRendered="true" />
+
+                        <h:outputText value="Ubicacion" />
+                        <h:inputText label="ubicacion" id="ubicacion"
+                                     value="#{equipoManagedBean.selected.ubicacion}">
+                        </h:inputText>
+                        <rich:message for="ubicacion" ajaxRendered="true" />
+
+                    </rich:validator>
+                    <rich:notifyMessages stayTime="2000" nonblocking="true" />
+                    <f:facet name="footer">
+                        <a4j:commandButton value="Registrar equipo" action="#{equipoManagedBean.registrarEquipo()}"/>
+                    </f:facet>
+                </h:panelGrid>
+            </rich:panel>
+        </h:form>
+    </ui:define>
+
+</ui:composition>

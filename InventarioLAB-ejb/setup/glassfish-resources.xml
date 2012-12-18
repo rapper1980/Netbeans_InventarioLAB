@@ -5,8 +5,8 @@
         <property name="serverName" value="localhost"/>
         <property name="portNumber" value="5432"/>
         <property name="databaseName" value="inventario_lab"/>
-        <property name="User" value="postgres"/>
-        <property name="Password" value="system"/>
+        <property name="User" value="inventario_jgbe"/>
+        <property name="Password" value="12345"/>
         <property name="URL" value="jdbc:postgresql://localhost:5432/inventario_lab"/>
         <property name="driverClass" value="org.postgresql.Driver"/>
     </jdbc-connection-pool>

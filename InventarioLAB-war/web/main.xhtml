@@ -14,7 +14,7 @@
         <title>Inventario LAB - Bienvenido!!</title>
 
         <!-- CSS -->
-        <link rel="stylesheet" type="text/css" href="css/plantilla.css" />
+        <link rel="stylesheet" type="text/css" href="../css/plantilla.css" />
     </h:head>
     <h:body>
         <div id="pagina">
@@ -57,11 +57,11 @@
                                     <h:outputText value="Personal" />
                                 </h:panelGrid>
                             </f:facet>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" action="gestionPersonal">
                                 <h:outputText value="Gestionar Personal" />
                             </rich:menuItem>
                             <rich:menuItem submitMode="client"
-                                           onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261'">
+                                           action="registrarPersonal">
                                 <h:outputText value="Registrar Personal" />
                             </rich:menuItem>
                         </rich:dropDownMenu>
@@ -72,12 +72,14 @@
                                     <h:outputText value="Equipos" />
                                 </h:panelGrid>
                             </f:facet>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" 
+                                           action="gestionEquipo">
+                                
                                 <h:outputText value="Gestionar Equipos" />
                             </rich:menuItem>
                             <rich:menuItem submitMode="client"
-                                           onclick="">
-                                <h:outputText value="Registrar Equipo" />
+                                           action="gestionTipoEquipo">
+                                <h:outputText value="Gestionar Tipo de Equipo" />
                             </rich:menuItem>
                         </rich:dropDownMenu>
                         

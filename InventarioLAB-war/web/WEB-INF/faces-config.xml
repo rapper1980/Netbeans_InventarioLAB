@@ -16,5 +16,32 @@
             <base-name>inventarioLAB.propiedades.mensajes</base-name>
             <var>msjs</var>
         </resource-bundle>
+        <resource-bundle>
+            <base-name>/Bundle</base-name>
+            <var>bundle</var>
+        </resource-bundle>
+        <navigation-rule>
+		<from-view-id>/*</from-view-id>
+		<navigation-case>
+			<from-outcome>gestionEquipo</from-outcome>
+			<to-view-id>/faces/Equipo/equipo.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>gestionTipoEquipo</from-outcome>
+			<to-view-id>/faces/Equipo/tipoEquipo.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+                <navigation-case>
+			<from-outcome>registrarPersonal</from-outcome>
+			<to-view-id>/faces/registrarPersonal.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+                <navigation-case>
+			<from-outcome>gestionPersonal</from-outcome>
+			<to-view-id>/faces/personal.xhtml</to-view-id>
+                        <redirect/>
+		</navigation-case>
+	</navigation-rule>
     </application>
 </faces-config>
