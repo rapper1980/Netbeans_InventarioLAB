@@ -137,7 +137,7 @@ public class TipoEquipo implements Serializable {
 
     @Override
     public String toString() {
-        return " "+idTipoEquipo+" ";
+        return this.descripcion;
     }
     
 }

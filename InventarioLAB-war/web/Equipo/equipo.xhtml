@@ -71,11 +71,51 @@
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">
-                        <a4j:commandButton value="Registrar equipo" action="#{equipoManagedBean.registrarEquipo()}"/>
+                        <a4j:commandButton value="Registrar equipo" action="#{equipoManagedBean.registrarEquipo()}" render="table"/>
                     </f:facet>
                 </h:panelGrid>
-            </rich:panel>
+            </rich:panel>         
         </h:form>
+        
+        <h2>Lista de Equipo</h2>
+        <a4j:status onstart="#{rich:component('statPane')}.show(); #{equipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
+        <rich:dataTable value="#{equipoManagedBean.getTodosTipos()}" var="equipo" iterationStatusVar="it" id="table" rows="30">
+            <rich:column>
+                <f:facet name="header">#</f:facet>
+                #{it.index}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Codigo</f:facet>
+                <h:outputText value="#{equipo.codigo}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Nombre</f:facet>
+                <h:outputText value="#{equipo.nombre}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Serie</f:facet>
+                <h:outputText value="#{equipo.serie}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Marca</f:facet>
+                <h:outputText value="#{equipo.marca}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Modelo</f:facet>
+                <h:outputText value="#{equipo.modelo}" />
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Precio</f:facet>
+                <h:outputText value="#{equipo.precio}" />
+            </rich:column>
+            <rich:column>
+                <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
+                                 oncomplete="#{rich:component('confirmPane')}.show()">
+                    <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
+                    <a4j:param value="#{it.index}" assignTo="#{equipoManagedBean.currentIndex}" />
+                </a4j:commandLink>
+            </rich:column>
+        </rich:dataTable>
     </ui:define>
 
 </ui:composition>

@@ -1,5 +1,6 @@
 package inventarioLAB.util;
 
+import inventarioLAB.entidades.Equipo;
 import inventarioLAB.entidades.TipoEquipo;
 import java.util.List;
 import javax.faces.application.FacesMessage;
@@ -38,6 +39,17 @@ public class JsfUtil {
         return todosTipos;
     }
     
+    public static List<Equipo> getAllEquipos(List<Equipo> entities, List<Equipo> todosEquipos) {
+        int size = entities.size();        
+        int i=0;
+        for (Object x : entities){
+            Equipo tmp = new Equipo();
+            tmp = (Equipo)x;
+            todosEquipos.add(tmp);
+            i++;
+        }
+        return todosEquipos;
+    }
     public static void addErrorMessage(Exception ex, String defaultMsg) {
         String msg = ex.getLocalizedMessage();
         if (msg != null && msg.length() > 0) {
@@ -71,6 +83,4 @@ public class JsfUtil {
         String theId = JsfUtil.getRequestParameter(requestParameterName);
         return converter.getAsObject(FacesContext.getCurrentInstance(), component, theId);
     }
-
-
 }

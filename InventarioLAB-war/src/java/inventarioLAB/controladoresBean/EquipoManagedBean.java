@@ -8,7 +8,9 @@ import inventarioLAB.entidades.Equipo;
 import inventarioLAB.entidades.TipoEquipo;
 import inventarioLAB.logica.EquipoFacade;
 import inventarioLAB.logica.EquipoFacadeLocal;
+import inventarioLAB.util.JsfUtil;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
@@ -26,6 +28,7 @@ public class EquipoManagedBean implements Serializable {
     private EquipoFacadeLocal equipoFacadeLocal;
     private Equipo equipo;
     private Equipo current;
+    private List<Equipo> todosEquipos = null;
     private int selectedItemIndex;
    // private static Map<String, TipoEquipo> fooMap = new TipoEquipo().map();
     //private List<SelectItem> selectItems;
@@ -39,6 +42,7 @@ public class EquipoManagedBean implements Serializable {
         this.equipo = new Equipo();
         this.equipoFacadeLocal = new EquipoFacade();    
         this.current = new Equipo();
+        this.todosEquipos = new ArrayList<Equipo>();
     }
     public Equipo getSelected() {
         if (current == null) {
@@ -69,5 +73,14 @@ public class EquipoManagedBean implements Serializable {
     private EquipoFacadeLocal getFacade() {
         return this.equipoFacadeLocal;
     }
-    
+    public void setTodosTipos(List<Equipo> todosEquipos) {
+        this.todosEquipos=todosEquipos;
+    }
+    public List<Equipo> getTodosTipos() {
+        this.clearTodos();
+        return JsfUtil.getAllEquipos(equipoFacadeLocal.findAll(),this.todosEquipos);
+    }
+    public void clearTodos(){
+        this.todosEquipos=new ArrayList<Equipo>();
+    }
 }
