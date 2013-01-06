@@ -26,76 +26,80 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "historial_usuario")
+@Table(name = "historial_usuario", catalog = "inventario_lab", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "HistorialUsuario.findAll", query = "SELECT h FROM HistorialUsuario h"),
     @NamedQuery(name = "HistorialUsuario.findById", query = "SELECT h FROM HistorialUsuario h WHERE h.id = :id"),
     @NamedQuery(name = "HistorialUsuario.findByUsuario", query = "SELECT h FROM HistorialUsuario h WHERE h.usuario = :usuario"),
+    @NamedQuery(name = "HistorialUsuario.findByEmail", query = "SELECT h FROM HistorialUsuario h WHERE h.email = :email"),
     @NamedQuery(name = "HistorialUsuario.findByClave", query = "SELECT h FROM HistorialUsuario h WHERE h.clave = :clave"),
     @NamedQuery(name = "HistorialUsuario.findByIdPersona", query = "SELECT h FROM HistorialUsuario h WHERE h.idPersona = :idPersona"),
-    @NamedQuery(name = "HistorialUsuario.findByObservacion", query = "SELECT h FROM HistorialUsuario h WHERE h.observacion = :observacion"),
-    @NamedQuery(name = "HistorialUsuario.findByEmail", query = "SELECT h FROM HistorialUsuario h WHERE h.email = :email"),
     @NamedQuery(name = "HistorialUsuario.findByEstado", query = "SELECT h FROM HistorialUsuario h WHERE h.estado = :estado"),
-    @NamedQuery(name = "HistorialUsuario.findByRol", query = "SELECT h FROM HistorialUsuario h WHERE h.rol = :rol"),
     @NamedQuery(name = "HistorialUsuario.findByModoAutenticacion", query = "SELECT h FROM HistorialUsuario h WHERE h.modoAutenticacion = :modoAutenticacion"),
+    @NamedQuery(name = "HistorialUsuario.findByRol", query = "SELECT h FROM HistorialUsuario h WHERE h.rol = :rol"),
     @NamedQuery(name = "HistorialUsuario.findByFechaIngreso", query = "SELECT h FROM HistorialUsuario h WHERE h.fechaIngreso = :fechaIngreso"),
     @NamedQuery(name = "HistorialUsuario.findByFechaModificacion", query = "SELECT h FROM HistorialUsuario h WHERE h.fechaModificacion = :fechaModificacion"),
-    @NamedQuery(name = "HistorialUsuario.findByUsuarioModificacion", query = "SELECT h FROM HistorialUsuario h WHERE h.usuarioModificacion = :usuarioModificacion")})
+    @NamedQuery(name = "HistorialUsuario.findByUsuarioModificacion", query = "SELECT h FROM HistorialUsuario h WHERE h.usuarioModificacion = :usuarioModificacion"),
+    @NamedQuery(name = "HistorialUsuario.findByObservacion", query = "SELECT h FROM HistorialUsuario h WHERE h.observacion = :observacion")})
 public class HistorialUsuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "usuario")
+    @Column(nullable = false, length = 15)
     private String usuario;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Size(max = 50)
+    @Column(length = 50)
+    private String email;
     @Size(max = 255)
-    @Column(name = "clave")
+    @Column(length = 255)
     private String clave;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_persona")
+    @Column(name = "id_persona", nullable = false)
     private int idPersona;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 150)
-    @Column(name = "observacion")
-    private String observacion;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 20)
-    @Column(name = "email")
-    private String email;
-    @Size(max = 1)
-    @Column(name = "estado")
+    @Size(min = 1, max = 1)
+    @Column(nullable = false, length = 1)
     private String estado;
-    @Size(max = 3)
-    @Column(name = "rol")
-    private String rol;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "modo_autenticacion")
+    @Column(name = "modo_autenticacion", nullable = false, length = 3)
     private String modoAutenticacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_ingreso")
+    @Size(min = 1, max = 3)
+    @Column(nullable = false, length = 3)
+    private String rol;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "fecha_ingreso", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_modificacion")
+    @Column(name = "fecha_modificacion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "usuario_modificacion")
+    @Column(name = "usuario_modificacion", nullable = false, length = 15)
     private String usuarioModificacion;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 150)
+    @Column(nullable = false, length = 150)
+    private String observacion;
 
     public HistorialUsuario() {
     }
@@ -104,15 +108,17 @@ public class HistorialUsuario implements Serializable {
         this.id = id;
     }
 
-    public HistorialUsuario(Integer id, String usuario, int idPersona, String observacion, String modoAutenticacion, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion) {
+    public HistorialUsuario(Integer id, String usuario, int idPersona, String estado, String modoAutenticacion, String rol, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion, String observacion) {
         this.id = id;
         this.usuario = usuario;
         this.idPersona = idPersona;
-        this.observacion = observacion;
+        this.estado = estado;
         this.modoAutenticacion = modoAutenticacion;
+        this.rol = rol;
         this.fechaIngreso = fechaIngreso;
         this.fechaModificacion = fechaModificacion;
         this.usuarioModificacion = usuarioModificacion;
+        this.observacion = observacion;
     }
 
     public Integer getId() {
@@ -131,6 +137,14 @@ public class HistorialUsuario implements Serializable {
         this.usuario = usuario;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getClave() {
         return clave;
     }
@@ -147,22 +161,6 @@ public class HistorialUsuario implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public String getObservacion() {
-        return observacion;
-    }
-
-    public void setObservacion(String observacion) {
-        this.observacion = observacion;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getEstado() {
         return estado;
     }
@@ -171,20 +169,20 @@ public class HistorialUsuario implements Serializable {
         this.estado = estado;
     }
 
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
     public String getModoAutenticacion() {
         return modoAutenticacion;
     }
 
     public void setModoAutenticacion(String modoAutenticacion) {
         this.modoAutenticacion = modoAutenticacion;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
     }
 
     public Date getFechaIngreso() {
@@ -209,6 +207,14 @@ public class HistorialUsuario implements Serializable {
 
     public void setUsuarioModificacion(String usuarioModificacion) {
         this.usuarioModificacion = usuarioModificacion;
+    }
+
+    public String getObservacion() {
+        return observacion;
+    }
+
+    public void setObservacion(String observacion) {
+        this.observacion = observacion;
     }
 
     @Override

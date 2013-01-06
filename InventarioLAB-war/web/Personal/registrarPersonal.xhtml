@@ -5,7 +5,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a4j="http://richfaces.org/a4j"
                 xmlns:rich="http://richfaces.org/rich"
-                template="./main.xhtml">
+                template="./../main.xhtml">
 
     <ui:define name="cuerpo">
         <h:outputStylesheet name="estilo">
@@ -35,22 +35,22 @@
             <h:form>
                 <h:panelGrid columns="3">
                     <rich:validator>
-                        <h:outputText value="Matricula" />
+                        <h:outputText value="Matricula 200616662" />
                         <h:inputText label="matricula" id="matricula"
-                                     value="#{usuarioManageBean.infoEstudiante.matricula}">
+                                     value="#{personaManagedBean.infoEstudiante.matricula}">
                         </h:inputText>
                         <rich:message for="matricula" ajaxRendered="true" />
 
                         <h:outputText value="Identificacion" />
                         <h:inputText label="identificacion" id="identificacion"
-                                     value="#{usuarioManageBean.infoEstudiante.identificacion}">
+                                     value="#{personaManagedBean.infoEstudiante.identificacion}">
                             <f:validateLength maximum="13" />
                         </h:inputText>
                         <rich:message for="identificacion" ajaxRendered="true" />
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">
-                        <a4j:commandButton value="Validar Estudiante" action="#{usuarioManageBean.verificarInfoEstiduante()}"/>
+                        <a4j:commandButton render="pInfoEstudiante" value="Validar Estudiante" action="#{personaManagedBean.verificarInfoEstiduante()}"/>
                     </f:facet>
                 </h:panelGrid>
             </h:form>
@@ -61,18 +61,24 @@
                 <f:facet name="header">
                     <h:outputText value="Informacion del Usuario" />
                 </f:facet>
+                
+                <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
                 <h:form>
                     <rich:togglePanel switchType="ajax">
                         <rich:togglePanelItem>
-                            <ui:include src="/wizards/wzRegistrarPersonal1.xhtml" />
+                            <ui:include src="../Personal/wizardsCrear/wzRegistrarPersonal1.xhtml" />
                         </rich:togglePanelItem>
                         <rich:togglePanelItem>
-                            <ui:include src="/wizards/wzRegistrarPersonal2.xhtml" />
+                            <ui:include src="../Personal/wizardsCrear/wzRegistrarPersonal2.xhtml" />
                         </rich:togglePanelItem>
                         <rich:togglePanelItem>
-                            <ui:include src="/wizards/wzRegistrarPersonal3.xhtml" />
+                            <ui:include src="../Personal/wizardsCrear/wzRegistrarPersonal3.xhtml" />
                         </rich:togglePanelItem>
                     </rich:togglePanel>
+                    <rich:popupPanel id="statPane" autosized="true">
+                        <h:graphicImage value="../imagenes/tools/ai.gif" alt="ai" />
+                        Por favor espere...
+                    </rich:popupPanel>
                 </h:form>
             </rich:panel>
 

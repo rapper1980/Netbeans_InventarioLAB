@@ -26,6 +26,42 @@ public class InformacionEstudianteESPOL {
     private double promedioCarrera;
     private int num_Matarias_Aprobadas;
     private String unidadAcademica;
+    private String division;
+    private String carrera;
+    private String especializ;
+    private String usuario;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getDivision() {
+        return division;
+    }
+
+    public void setDivision(String division) {
+        this.division = division;
+    }
+
+    public String getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(String carrera) {
+        this.carrera = carrera;
+    }
+
+    public String getEspecializ() {
+        return especializ;
+    }
+
+    public void setEspecializ(String especializ) {
+        this.especializ = especializ;
+    }
     private String fecha_nacimiento;
     private String registrado;
 

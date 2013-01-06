@@ -5,8 +5,8 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -32,12 +32,11 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "solicitud_prestamo")
+@Table(name = "solicitud_prestamo", catalog = "inventario_lab", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "SolicitudPrestamo.findAll", query = "SELECT s FROM SolicitudPrestamo s"),
     @NamedQuery(name = "SolicitudPrestamo.findByIdSolicitudPrestamo", query = "SELECT s FROM SolicitudPrestamo s WHERE s.idSolicitudPrestamo = :idSolicitudPrestamo"),
-    @NamedQuery(name = "SolicitudPrestamo.findByMatricula", query = "SELECT s FROM SolicitudPrestamo s WHERE s.matricula = :matricula"),
     @NamedQuery(name = "SolicitudPrestamo.findByFechaSolicitud", query = "SELECT s FROM SolicitudPrestamo s WHERE s.fechaSolicitud = :fechaSolicitud"),
     @NamedQuery(name = "SolicitudPrestamo.findByFechaPrestamo", query = "SELECT s FROM SolicitudPrestamo s WHERE s.fechaPrestamo = :fechaPrestamo"),
     @NamedQuery(name = "SolicitudPrestamo.findByFechaDevolucion", query = "SELECT s FROM SolicitudPrestamo s WHERE s.fechaDevolucion = :fechaDevolucion"),
@@ -49,16 +48,11 @@ public class SolicitudPrestamo implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_solicitud_prestamo")
+    @Column(name = "id_solicitud_prestamo", nullable = false)
     private Integer idSolicitudPrestamo;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
-    @Column(name = "matricula")
-    private String matricula;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_solicitud")
+    @Column(name = "fecha_solicitud", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaSolicitud;
     @Column(name = "fecha_prestamo")
@@ -70,21 +64,24 @@ public class SolicitudPrestamo implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "autorizacion_requerida")
+    @Column(name = "autorizacion_requerida", nullable = false, length = 1)
     private String autorizacionRequerida;
     @Size(max = 15)
-    @Column(name = "usuario_autorizacion")
+    @Column(name = "usuario_autorizacion", length = 15)
     private String usuarioAutorizacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "estado")
+    @Column(nullable = false, length = 3)
     private String estado;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idSolicitudPrestamo")
-    private Collection<DetalleSolicitudPrestamo> detalleSolicitudPrestamoCollection;
-    @JoinColumn(name = "usuario", referencedColumnName = "usuario")
+    private List<DetalleSolicitudPrestamo> detalleSolicitudPrestamoList;
+    @JoinColumn(name = "usuario", referencedColumnName = "usuario", nullable = false)
     @ManyToOne(optional = false)
     private Usuario usuario;
+    @JoinColumn(name = "matricula", referencedColumnName = "matricula", nullable = false)
+    @ManyToOne(optional = false)
+    private EstudianteEspol matricula;
 
     public SolicitudPrestamo() {
     }
@@ -93,9 +90,8 @@ public class SolicitudPrestamo implements Serializable {
         this.idSolicitudPrestamo = idSolicitudPrestamo;
     }
 
-    public SolicitudPrestamo(Integer idSolicitudPrestamo, String matricula, Date fechaSolicitud, String autorizacionRequerida, String estado) {
+    public SolicitudPrestamo(Integer idSolicitudPrestamo, Date fechaSolicitud, String autorizacionRequerida, String estado) {
         this.idSolicitudPrestamo = idSolicitudPrestamo;
-        this.matricula = matricula;
         this.fechaSolicitud = fechaSolicitud;
         this.autorizacionRequerida = autorizacionRequerida;
         this.estado = estado;
@@ -107,14 +103,6 @@ public class SolicitudPrestamo implements Serializable {
 
     public void setIdSolicitudPrestamo(Integer idSolicitudPrestamo) {
         this.idSolicitudPrestamo = idSolicitudPrestamo;
-    }
-
-    public String getMatricula() {
-        return matricula;
-    }
-
-    public void setMatricula(String matricula) {
-        this.matricula = matricula;
     }
 
     public Date getFechaSolicitud() {
@@ -166,12 +154,12 @@ public class SolicitudPrestamo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<DetalleSolicitudPrestamo> getDetalleSolicitudPrestamoCollection() {
-        return detalleSolicitudPrestamoCollection;
+    public List<DetalleSolicitudPrestamo> getDetalleSolicitudPrestamoList() {
+        return detalleSolicitudPrestamoList;
     }
 
-    public void setDetalleSolicitudPrestamoCollection(Collection<DetalleSolicitudPrestamo> detalleSolicitudPrestamoCollection) {
-        this.detalleSolicitudPrestamoCollection = detalleSolicitudPrestamoCollection;
+    public void setDetalleSolicitudPrestamoList(List<DetalleSolicitudPrestamo> detalleSolicitudPrestamoList) {
+        this.detalleSolicitudPrestamoList = detalleSolicitudPrestamoList;
     }
 
     public Usuario getUsuario() {
@@ -180,6 +168,14 @@ public class SolicitudPrestamo implements Serializable {
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public EstudianteEspol getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(EstudianteEspol matricula) {
+        this.matricula = matricula;
     }
 
     @Override

@@ -5,7 +5,7 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,7 +27,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "tipo_equipo")
+@Table(name = "tipo_equipo", catalog = "inventario_lab", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TipoEquipo.findAll", query = "SELECT t FROM TipoEquipo t"),
@@ -39,26 +39,26 @@ public class TipoEquipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    //@Basic(optional = false)
-    @Column(name = "id_tipo_equipo")
+    @Basic(optional = false)
+    @Column(name = "id_tipo_equipo", nullable = false)
     private Integer idTipoEquipo;
     @Basic(optional = false)
-    //@NotNull
+    @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "descripcion")
+    @Column(nullable = false, length = 30)
     private String descripcion;
     @Basic(optional = false)
-    //@NotNull
+    @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "prestar")
+    @Column(nullable = false, length = 1)
     private String prestar;
     @Basic(optional = false)
-    //@NotNull
+    @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "autorizacion")
+    @Column(nullable = false, length = 1)
     private String autorizacion;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idTipoEquipo")
-    private Collection<Equipo> equipoCollection;
+    private List<Equipo> equipoList;
 
     public TipoEquipo() {
     }
@@ -107,12 +107,12 @@ public class TipoEquipo implements Serializable {
     }
 
     @XmlTransient
-    public Collection<Equipo> getEquipoCollection() {
-        return equipoCollection;
+    public List<Equipo> getEquipoList() {
+        return equipoList;
     }
 
-    public void setEquipoCollection(Collection<Equipo> equipoCollection) {
-        this.equipoCollection = equipoCollection;
+    public void setEquipoList(List<Equipo> equipoList) {
+        this.equipoList = equipoList;
     }
 
     @Override
@@ -137,7 +137,7 @@ public class TipoEquipo implements Serializable {
 
     @Override
     public String toString() {
-        return this.descripcion;
+        return "inventarioLAB.entidades.TipoEquipo[ idTipoEquipo=" + idTipoEquipo + " ]";
     }
     
 }

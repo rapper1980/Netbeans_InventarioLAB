@@ -5,21 +5,22 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,88 +31,103 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "usuario")
+@Table(catalog = "inventario_lab", schema = "public", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"usuario"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u"),
+    @NamedQuery(name = "Usuario.findByIdPersona", query = "SELECT u FROM Usuario u WHERE u.idPersona = :idPersona"),
     @NamedQuery(name = "Usuario.findByUsuario", query = "SELECT u FROM Usuario u WHERE u.usuario = :usuario"),
     @NamedQuery(name = "Usuario.findByClave", query = "SELECT u FROM Usuario u WHERE u.clave = :clave"),
+    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email"),
     @NamedQuery(name = "Usuario.findByEstado", query = "SELECT u FROM Usuario u WHERE u.estado = :estado"),
     @NamedQuery(name = "Usuario.findByModoAutenticacion", query = "SELECT u FROM Usuario u WHERE u.modoAutenticacion = :modoAutenticacion"),
     @NamedQuery(name = "Usuario.findByRol", query = "SELECT u FROM Usuario u WHERE u.rol = :rol"),
     @NamedQuery(name = "Usuario.findByFechaIngreso", query = "SELECT u FROM Usuario u WHERE u.fechaIngreso = :fechaIngreso"),
     @NamedQuery(name = "Usuario.findByFechaModificacion", query = "SELECT u FROM Usuario u WHERE u.fechaModificacion = :fechaModificacion"),
-    @NamedQuery(name = "Usuario.findByUsuarioModificacion", query = "SELECT u FROM Usuario u WHERE u.usuarioModificacion = :usuarioModificacion"),
-    @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
+    @NamedQuery(name = "Usuario.findByUsuarioModificacion", query = "SELECT u FROM Usuario u WHERE u.usuarioModificacion = :usuarioModificacion")})
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
+    @Column(name = "id_persona", nullable = false)
+    private Integer idPersona;
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "usuario")
+    @Column(nullable = false, length = 15)
     private String usuario;
     @Size(max = 255)
-    @Column(name = "clave")
+    @Column(length = 255)
     private String clave;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(nullable = false, length = 50)
+    private String email;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 1)
-    @Column(name = "estado")
+    @Column(nullable = false, length = 1)
     private String estado;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "modo_autenticacion")
+    @Column(name = "modo_autenticacion", nullable = false, length = 3)
     private String modoAutenticacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "rol")
+    @Column(nullable = false, length = 3)
     private String rol;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_ingreso")
+    @Column(name = "fecha_ingreso", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaIngreso;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "fecha_modificacion")
+    @Column(name = "fecha_modificacion", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaModificacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "usuario_modificacion")
+    @Column(name = "usuario_modificacion", nullable = false, length = 15)
     private String usuarioModificacion;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
-    @Column(name = "email")
-    private String email;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona")
-    @ManyToOne(optional = false)
-    private Persona idPersona;
+    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", nullable = false, insertable = false, updatable = false)
+    @OneToOne(optional = false)
+    private Persona persona;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private Collection<SolicitudPrestamo> solicitudPrestamoCollection;
+    private List<SolicitudPrestamo> solicitudPrestamoList;
 
     public Usuario() {
     }
 
-    public Usuario(String usuario) {
-        this.usuario = usuario;
+    public Usuario(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
-    public Usuario(String usuario, String estado, String modoAutenticacion, String rol, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion, String email) {
+    public Usuario(Integer idPersona, String usuario, String email, String estado, String modoAutenticacion, String rol, Date fechaIngreso, Date fechaModificacion, String usuarioModificacion) {
+        this.idPersona = idPersona;
         this.usuario = usuario;
+        this.email = email;
         this.estado = estado;
         this.modoAutenticacion = modoAutenticacion;
         this.rol = rol;
         this.fechaIngreso = fechaIngreso;
         this.fechaModificacion = fechaModificacion;
         this.usuarioModificacion = usuarioModificacion;
-        this.email = email;
+    }
+
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getUsuario() {
@@ -128,6 +144,14 @@ public class Usuario implements Serializable {
 
     public void setClave(String clave) {
         this.clave = clave;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getEstado() {
@@ -178,35 +202,27 @@ public class Usuario implements Serializable {
         this.usuarioModificacion = usuarioModificacion;
     }
 
-    public String getEmail() {
-        return email;
+    public Persona getPersona() {
+        return persona;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public Persona getIdPersona() {
-        return idPersona;
-    }
-
-    public void setIdPersona(Persona idPersona) {
-        this.idPersona = idPersona;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
 
     @XmlTransient
-    public Collection<SolicitudPrestamo> getSolicitudPrestamoCollection() {
-        return solicitudPrestamoCollection;
+    public List<SolicitudPrestamo> getSolicitudPrestamoList() {
+        return solicitudPrestamoList;
     }
 
-    public void setSolicitudPrestamoCollection(Collection<SolicitudPrestamo> solicitudPrestamoCollection) {
-        this.solicitudPrestamoCollection = solicitudPrestamoCollection;
+    public void setSolicitudPrestamoList(List<SolicitudPrestamo> solicitudPrestamoList) {
+        this.solicitudPrestamoList = solicitudPrestamoList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (usuario != null ? usuario.hashCode() : 0);
+        hash += (idPersona != null ? idPersona.hashCode() : 0);
         return hash;
     }
 
@@ -217,7 +233,7 @@ public class Usuario implements Serializable {
             return false;
         }
         Usuario other = (Usuario) object;
-        if ((this.usuario == null && other.usuario != null) || (this.usuario != null && !this.usuario.equals(other.usuario))) {
+        if ((this.idPersona == null && other.idPersona != null) || (this.idPersona != null && !this.idPersona.equals(other.idPersona))) {
             return false;
         }
         return true;
@@ -225,7 +241,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "inventarioLAB.entidades.Usuario[ usuario=" + usuario + " ]";
+        return "inventarioLAB.entidades.Usuario[ idPersona=" + idPersona + " ]";
     }
     
 }

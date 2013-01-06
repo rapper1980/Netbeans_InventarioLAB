@@ -87,25 +87,25 @@
                     </div>
                     <div id="formulario_registrar" class="animate form">
                         <h:form id="form_registrar" styleClass="form_login">
-                            <rich:validator id="validarRegistrar">
+                            <rich:validator>
                                 <h2> Sing Up</h2>
                                 <div>
                                     <h:outputLabel id="lab_usuario_r" styleClass="lab_usuario_r" for="inp_usuario_r" value="Usuario" />
-                                    <h:inputText id="inp_usuario_r" styleClass="inp_usuario_r" required="true" requiredMessage="Ingrese usuario Invetario" value="#{usuarioManageBean.usuarioSesion.usuario}" />
+                                    <h:inputText id="inp_usuario_r" styleClass="inp_usuario_r" disabled="true" required="true" requiredMessage="Ingrese usuario Invetario" value="admin" />
                                 </div>
                                 <div>
                                     <h:outputLabel id="lab_clave_r" styleClass="lab_clave_r" for="inp_clave_r" value="Clave" />
-                                    <h:inputSecret id="inp_clave_r" styleClass="inp_clave_r" required="true" requiredMessage="La clave es requerida" value="#{usuarioManageBean.usuarioSesion.clave}" />
+                                    <h:inputSecret id="inp_clave_r" styleClass="inp_clave_r" required="true" requiredMessage="La clave es requerida" value="#{personaManagedBean.usuarioEditar.clave}" />
                                 </div>
                                 <div>
-                                    <h:commandButton styleClass="btn_login" value="Registrar" action="#{usuarioManageBean.registrarUsuarioADMIN()}"></h:commandButton>
+                                    <h:commandButton styleClass="btn_login" value="Registrar" action="#{personaManagedBean.registrarADMIN()}"></h:commandButton>
                                 </div>
                                 <div class="change_link">
                                     Already a member ?
                                     <a href="#tologin" class="to_register"> Go and log in </a>
                                 </div>
                             </rich:validator>
-                            <rich:notifyMessages for="validarRegistrar" stayTime="2000" nonblocking="true" />
+                            <rich:notifyMessages stayTime="2000" nonblocking="true" />
                         </h:form>
                     </div>
                 </div>

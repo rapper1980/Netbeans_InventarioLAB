@@ -6,7 +6,6 @@ package inventarioLAB.logica;
 
 import inventarioLAB.entidades.Usuario;
 import inventarioLAB.logica.beansAdicionales.InformacionEstudianteESPOL;
-import inventarioLAB.logica.excepciones.InsercionIlegal;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -30,10 +29,6 @@ public interface UsuarioFacadeLocal {
     List<Usuario> findRange(int[] range);
 
     int count();
-    
-    void crear(Usuario usuario) throws InsercionIlegal;
-    
-    void editar(Usuario usuario);
     
     void inactiva(Usuario usuario);
     

@@ -12,7 +12,7 @@
         }
     </h:outputStylesheet>
     <body>
-        <ui:composition template="./main.xhtml">
+        <ui:composition template="./../main.xhtml">
             <ui:define name="cuerpo">
                 <h2>Gestion de Personal</h2>
                 <rich:panel header="Filtros">
@@ -86,13 +86,13 @@
                                 <f:facet name="header">Opciones</f:facet>
                                 <a4j:commandLink styleClass="no-decor" render="editGrid" execute="@this"
                                                  oncomplete="#{rich:component('editPane')}.show()">
-                                    <h:graphicImage value="/imagenes/tools/edit.gif" alt="edit" />
+                                    <h:graphicImage value="../imagenes/tools/edit.gif" alt="edit" />
                                     <a4j:param value="#{it.index}" assignTo="#{personalBean.indiceActual}" />
                                     <f:setPropertyActionListener target="#{personalBean.usuarioEditar}" value="#{personal}" />
                                 </a4j:commandLink>
                                 <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
                                                  oncomplete="#{rich:component('confirmPane')}.show()">
-                                    <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
+                                    <h:graphicImage value="../imagenes/tools/delete.gif" alt="delete" />
                                     <a4j:param value="#{it.index}" assignTo="#{personalBean.indiceActual}" />
                                 </a4j:commandLink>
                             </rich:column>
@@ -106,7 +106,7 @@
                                     oncomplete="#{rich:component('confirmPane')}.hide();" />
 
                     <rich:popupPanel id="statPane" autosized="true">
-                        <h:graphicImage value="/imagenes/tools/ai.gif" alt="ai" />
+                        <h:graphicImage value="../imagenes/tools/ai.gif" alt="ai" />
                         Por favor espere...
                     </rich:popupPanel>
 

@@ -5,25 +5,31 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "estudiante_espol")
+@Table(name = "estudiante_espol", catalog = "inventario_lab", schema = "public", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"matricula"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "EstudianteEspol.findAll", query = "SELECT e FROM EstudianteEspol e"),
@@ -40,41 +46,49 @@ public class EstudianteEspol implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_persona")
+    @Column(name = "id_persona", nullable = false)
     private Integer idPersona;
-    @Size(max = 10)
-    @Column(name = "matricula")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
+    @Column(nullable = false, length = 10)
     private String matricula;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "cod_unidad")
+    @Column(name = "cod_unidad", nullable = false, length = 5)
     private String codUnidad;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "cod_division")
+    @Column(name = "cod_division", nullable = false, length = 5)
     private String codDivision;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "cod_carrera")
+    @Column(name = "cod_carrera", nullable = false, length = 5)
     private String codCarrera;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 5)
-    @Column(name = "cod_especializacion")
+    @Column(name = "cod_especializacion", nullable = false, length = 5)
     private String codEspecializacion;
-    @Size(max = 100)
-    @Column(name = "nombre_carrera")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
+    @Column(name = "nombre_carrera", nullable = false, length = 100)
     private String nombreCarrera;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
-    @Size(max = 20)
-    @Column(name = "email")
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
+    @Column(nullable = false, length = 50)
     private String email;
-    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", insertable = false, updatable = false)
+    @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Persona persona;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
+    private List<SolicitudPrestamo> solicitudPrestamoList;
 
     public EstudianteEspol() {
     }
@@ -83,12 +97,15 @@ public class EstudianteEspol implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public EstudianteEspol(Integer idPersona, String codUnidad, String codDivision, String codCarrera, String codEspecializacion) {
+    public EstudianteEspol(Integer idPersona, String matricula, String codUnidad, String codDivision, String codCarrera, String codEspecializacion, String nombreCarrera, String email) {
         this.idPersona = idPersona;
+        this.matricula = matricula;
         this.codUnidad = codUnidad;
         this.codDivision = codDivision;
         this.codCarrera = codCarrera;
         this.codEspecializacion = codEspecializacion;
+        this.nombreCarrera = nombreCarrera;
+        this.email = email;
     }
 
     public Integer getIdPersona() {
@@ -161,6 +178,15 @@ public class EstudianteEspol implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
+    }
+
+    @XmlTransient
+    public List<SolicitudPrestamo> getSolicitudPrestamoList() {
+        return solicitudPrestamoList;
+    }
+
+    public void setSolicitudPrestamoList(List<SolicitudPrestamo> solicitudPrestamoList) {
+        this.solicitudPrestamoList = solicitudPrestamoList;
     }
 
     @Override

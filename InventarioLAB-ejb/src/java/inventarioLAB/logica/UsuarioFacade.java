@@ -6,15 +6,11 @@ package inventarioLAB.logica;
 
 import inventarioLAB.entidades.Usuario;
 import inventarioLAB.logica.beansAdicionales.InformacionEstudianteESPOL;
-import inventarioLAB.logica.excepciones.InsercionIlegal;
-import inventarioLAB.logica.excepciones.RegistroDuplicado;
 import inventarioLAB.webServicesClient.ESPOL.DirectorioEspol;
 import inventarioLAB.webServicesClient.ESPOL_SAAC.InformacionAcademicaEstudianteGetResponse;
 import inventarioLAB.webServicesClient.ESPOL_SAAC.InformacionAcademicaEstudianteGetResponse.InformacionAcademicaEstudianteGetResult;
 import inventarioLAB.webServicesClient.ESPOL_SAAC.WsSAAC;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -44,38 +40,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     public UsuarioFacade() {
         super(Usuario.class);
     }
-    
-    /**
-     * Inserta/Crear/Registra un usuario a la Base de Datos.
-     * @param usuario 
-     */
-    @Override
-    public void crear(Usuario usuario) throws InsercionIlegal{
-        if (!existeUsuario(usuario.getUsuario())) {
-            try {
-                this.em.persist(usuario.getIdPersona());
-                this.em.persist(usuario);
-            } catch (Exception e) {
-                System.out.println("AQUIE ERROR: " + e);
-            }
-            
-        }
-        else {
-            throw new InsercionIlegal("Insercion Ilegal: \n"
-                    + "Ususario: " + usuario.getUsuario());
-        }
         
-    }
-    
-    /**
-     * Actualiza/Modifica/Cambia la informacion del usuario en la Base de Datos.
-     * @param usuario 
-     */
-    @Override
-    public void editar(Usuario usuario){
-        this.em.merge(usuario);
-    }
-    
     /**
      * Inactiva un usuario a la Base de Datos.
      * Cambia de estado <tt>Activo</tt> (A) a estado <tt>Inactivo</tt> (I).
@@ -137,61 +102,10 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
         List<Usuario> lista = null;
         Query query = this.em.createNamedQuery("Usuario.findByUsuario");
         query.setParameter("usuario", usuario);
-        try{
-            lista = query.getResultList();
-            
-            if (lista != null) {
-               if (!lista.isEmpty()) {
-                   if (lista.size() > 1){
-                       throw new RegistroDuplicado("Registro Duplicado: \n"
-                               + "Usuario " + usuario + " con mas de un registro" +
-                               "\n Favor contacte al administrador de Base de Datos");
-                   }
-               }
-            }
-        } catch (Exception e) {
-            
-        }
         
         return resultado;
     }
-    
-    /**
-     * Verifica que un usuario exista en la Base de Datos.
-     * @param usuario
-     * @return <tt>ture</tt> Si el usuario existe, <tt>false</tt> si no existe.
-     */
-    private boolean existeUsuarioEstado(String usuario, String estado) throws RegistroDuplicado{
-        boolean resultado = false;
-        List<Usuario> lista = null;
-        Query query = this.em.createNamedQuery("Usuario.findByUsuarioEstado");
-        query.setParameter("usuario", usuario);
-        query.setParameter("estado", estado);
-        try{
-            lista = query.getResultList();
-            
-            if (lista != null) {
-               if (!lista.isEmpty()) {
-                   if (lista.size() > 1){
-                       throw new RegistroDuplicado("Registro Duplicado: \n"
-                               + "Usuario " + usuario +" con mas de un registro en estado" + estado +
-                               "\n Favor contacte al administrador de Base de Datos");
-                   }
-                   resultado = true;
-               }
-               else{
-                   resultado = false;
-               }
-            }
-            else{
-                resultado = false;
-            }
-        } catch (Exception e) {
-            
-        }
-        
-        return resultado;
-    }
+   
     
     /**
      * Inactiva un usuario a la Base de Datos.
@@ -221,13 +135,7 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
     @Override
     public Usuario autenticar(Usuario usuario) {
         Usuario resultado = null;
-        try {
-            if (autenticacion(usuario.getUsuario(), usuario.getClave()) && existeUsuarioEstado(usuario.getUsuario() , "A")){
-                resultado = obtenerUsuario(usuario, null);
-            }
-        } catch (RegistroDuplicado ex) {
-            Logger.getLogger(UsuarioFacade.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        
         
         return resultado;
     }
@@ -305,45 +213,39 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
             
             if ("COD_ESTUDIANTE".equals(attribute_tag)){
                 info.setMatricula(tag.getTextContent().trim());
-            }
-            if ("IDENTIFICACION".equals(attribute_tag)){
+            } else if ("IDENTIFICACION".equals(attribute_tag)){
                 info.setIdentificacion(tag.getTextContent().trim());
-            }
-            if ("TIPO_IDENTIF".equals(attribute_tag)){
+            } else if ("TIPO_IDENTIF".equals(attribute_tag)){
                 info.setTipo_identif(tag.getTextContent().trim());
-            }
-            if ("ESTADO_ESTUDIANTE".equals(attribute_tag)){
+            } else if ("ESTADO_ESTUDIANTE".equals(attribute_tag)){
                 info.setEstado(tag.getTextContent().trim());
-            }
-            if ("APELLIDOS".equals(attribute_tag)){
+            } else if ("APELLIDOS".equals(attribute_tag)){
                 info.setApellidos(tag.getTextContent().trim());
-            }
-            if ("NOMBRES".equals(attribute_tag)){
+            } else if ("NOMBRES".equals(attribute_tag)){
                 info.setNombres(tag.getTextContent().trim());
-            }
-            if ("FACTOR_P".equals(attribute_tag)){
+            } else if ("FACTOR_P".equals(attribute_tag)){
                 info.setFactor_p(Integer.parseInt(tag.getTextContent().trim()));
-            }
-            if ("NOMBRE_CARRERA".equals(attribute_tag)){
+            } else if ("NOMBRE_CARRERA".equals(attribute_tag)){
                 info.setNombreCarrera(tag.getTextContent().trim());
-            }
-            if ("EMAIL".equals(attribute_tag)){
+            } else if ("EMAIL".equals(attribute_tag)){
                 info.setEmail(tag.getTextContent().trim());
-            }
-            if ("NUMAPROBADAS".equals(attribute_tag)){
+                info.setUsuario(info.getEmail().substring(0, info.getEmail().indexOf("@")));
+            } else if ("NUMAPROBADAS".equals(attribute_tag)){
                 info.setNum_Matarias_Aprobadas(Integer.parseInt(tag.getTextContent().trim()));
-            }
-            if ("PROMEDIOCARRERA".equals(attribute_tag)){
+            } else if ("PROMEDIOCARRERA".equals(attribute_tag)){
                 info.setPromedioCarrera(Double.parseDouble(tag.getTextContent().trim()));
-            }
-            if ("ESTA_REGISTRADO".equals(attribute_tag)){
+            } else if ("ESTA_REGISTRADO".equals(attribute_tag)){
                 info.setRegistrado(tag.getTextContent().trim());
-            }
-            if ("COD_UNIDAD".equals(attribute_tag)){
+            } else if ("COD_UNIDAD".equals(attribute_tag)){
                 info.setUnidadAcademica(tag.getTextContent().trim());
-            }
-            if ("FECHA_NACIM".equals(attribute_tag)){
-                info.setFecha_nacimiento(tag.getTextContent().trim());
+            } else if ("FECHA_NACIM".equals(attribute_tag)){
+                info.setFecha_nacimiento(tag.getTextContent().trim().substring(0, tag.getTextContent().trim().indexOf("T")));
+            } else if ("COD_DIVISION".equals(attribute_tag)){
+                info.setDivision(tag.getTextContent().trim());
+            } else if ("COD_CARRERA".equals(attribute_tag)){
+                info.setCarrera(tag.getTextContent().trim());
+            } else if ("COD_ESPECIALIZ".equals(attribute_tag)){
+                info.setEspecializ(tag.getTextContent().trim());
             }
         }
         return info;

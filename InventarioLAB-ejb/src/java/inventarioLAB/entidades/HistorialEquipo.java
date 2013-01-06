@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "historial_equipo")
+@Table(name = "historial_equipo", catalog = "inventario_lab", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "HistorialEquipo.findAll", query = "SELECT h FROM HistorialEquipo h"),
@@ -39,64 +39,58 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "HistorialEquipo.findByUbicacion", query = "SELECT h FROM HistorialEquipo h WHERE h.ubicacion = :ubicacion"),
     @NamedQuery(name = "HistorialEquipo.findByIdTipoEquipo", query = "SELECT h FROM HistorialEquipo h WHERE h.idTipoEquipo = :idTipoEquipo"),
     @NamedQuery(name = "HistorialEquipo.findByEstado", query = "SELECT h FROM HistorialEquipo h WHERE h.estado = :estado"),
-    @NamedQuery(name = "HistorialEquipo.findByAutorizacion", query = "SELECT h FROM HistorialEquipo h WHERE h.autorizacion = :autorizacion"),
     @NamedQuery(name = "HistorialEquipo.findByObservacion", query = "SELECT h FROM HistorialEquipo h WHERE h.observacion = :observacion")})
 public class HistorialEquipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id")
+    @Column(nullable = false)
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_equipo")
+    @Column(name = "id_equipo", nullable = false)
     private int idEquipo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "serie")
+    @Column(nullable = false, length = 15)
     private String serie;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 15)
-    @Column(name = "codigo")
+    @Column(nullable = false, length = 15)
     private String codigo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 20)
-    @Column(name = "nombre")
+    @Column(nullable = false, length = 20)
     private String nombre;
     @Size(max = 20)
-    @Column(name = "marca")
+    @Column(length = 20)
     private String marca;
     @Size(max = 20)
-    @Column(name = "modelo")
+    @Column(length = 20)
     private String modelo;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "precio")
+    @Column(precision = 10, scale = 2)
     private BigDecimal precio;
     @Size(max = 255)
-    @Column(name = "ubicacion")
+    @Column(length = 255)
     private String ubicacion;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_tipo_equipo")
+    @Column(name = "id_tipo_equipo", nullable = false)
     private int idTipoEquipo;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "estado")
+    @Column(nullable = false, length = 3)
     private String estado;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "autorizacion")
-    private String autorizacion;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 150)
-    @Column(name = "observacion")
+    @Column(nullable = false, length = 150)
     private String observacion;
 
     public HistorialEquipo() {
@@ -106,7 +100,7 @@ public class HistorialEquipo implements Serializable {
         this.id = id;
     }
 
-    public HistorialEquipo(Integer id, int idEquipo, String serie, String codigo, String nombre, int idTipoEquipo, String estado, String autorizacion, String observacion) {
+    public HistorialEquipo(Integer id, int idEquipo, String serie, String codigo, String nombre, int idTipoEquipo, String estado, String observacion) {
         this.id = id;
         this.idEquipo = idEquipo;
         this.serie = serie;
@@ -114,7 +108,6 @@ public class HistorialEquipo implements Serializable {
         this.nombre = nombre;
         this.idTipoEquipo = idTipoEquipo;
         this.estado = estado;
-        this.autorizacion = autorizacion;
         this.observacion = observacion;
     }
 
@@ -204,14 +197,6 @@ public class HistorialEquipo implements Serializable {
 
     public void setEstado(String estado) {
         this.estado = estado;
-    }
-
-    public String getAutorizacion() {
-        return autorizacion;
-    }
-
-    public void setAutorizacion(String autorizacion) {
-        this.autorizacion = autorizacion;
     }
 
     public String getObservacion() {

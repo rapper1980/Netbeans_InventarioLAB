@@ -5,6 +5,8 @@
 package inventarioLAB.logica;
 
 import inventarioLAB.entidades.Persona;
+import inventarioLAB.logica.excepciones.InsercionIlegal;
+import inventarioLAB.logica.excepciones.RestriccionUnica;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -28,5 +30,11 @@ public interface PersonaFacadeLocal {
     List<Persona> findRange(int[] range);
 
     int count();
+
+    void crear(Persona persona) throws RestriccionUnica, InsercionIlegal ;
+
+    void editar(inventarioLAB.entidades.Persona persona) throws RestriccionUnica, InsercionIlegal;
+
+    void registrarADMIN(String clave) throws RestriccionUnica, InsercionIlegal;
     
 }

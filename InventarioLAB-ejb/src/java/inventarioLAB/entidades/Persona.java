@@ -5,7 +5,6 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -16,22 +15,22 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "persona")
+@Table(catalog = "inventario_lab", schema = "public", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"identificacion"})})
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Persona.findAll", query = "SELECT p FROM Persona p"),
@@ -40,49 +39,43 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Persona.findByIdentificacion", query = "SELECT p FROM Persona p WHERE p.identificacion = :identificacion"),
     @NamedQuery(name = "Persona.findByNombres", query = "SELECT p FROM Persona p WHERE p.nombres = :nombres"),
     @NamedQuery(name = "Persona.findByApellidos", query = "SELECT p FROM Persona p WHERE p.apellidos = :apellidos"),
-    @NamedQuery(name = "Persona.findBySexo", query = "SELECT p FROM Persona p WHERE p.sexo = :sexo"),
     @NamedQuery(name = "Persona.findByFechaNacimiento", query = "SELECT p FROM Persona p WHERE p.fechaNacimiento = :fechaNacimiento")})
 public class Persona implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_persona")
+    @Column(name = "id_persona", nullable = false)
     private Integer idPersona;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 3)
-    @Column(name = "tipo_identificacion")
+    @Column(name = "tipo_identificacion", nullable = false, length = 3)
     private String tipoIdentificacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 13)
-    @Column(name = "identificacion")
+    @Column(nullable = false, length = 13)
     private String identificacion;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "nombres")
+    @Column(nullable = false, length = 30)
     private String nombres;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 30)
-    @Column(name = "apellidos")
+    @Column(nullable = false, length = 30)
     private String apellidos;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 1)
-    @Column(name = "sexo")
-    private String sexo;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "fecha_nacimiento")
+    @Column(name = "fecha_nacimiento", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date fechaNacimiento;
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
     private EstudianteEspol estudianteEspol;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idPersona")
-    private Collection<Usuario> usuarioCollection;
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "persona")
+    private Usuario usuario;
 
     public Persona() {
     }
@@ -91,13 +84,12 @@ public class Persona implements Serializable {
         this.idPersona = idPersona;
     }
 
-    public Persona(Integer idPersona, String tipoIdentificacion, String identificacion, String nombres, String apellidos, String sexo, Date fechaNacimiento) {
+    public Persona(Integer idPersona, String tipoIdentificacion, String identificacion, String nombres, String apellidos, Date fechaNacimiento) {
         this.idPersona = idPersona;
         this.tipoIdentificacion = tipoIdentificacion;
         this.identificacion = identificacion;
         this.nombres = nombres;
         this.apellidos = apellidos;
-        this.sexo = sexo;
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -141,14 +133,6 @@ public class Persona implements Serializable {
         this.apellidos = apellidos;
     }
 
-    public String getSexo() {
-        return sexo;
-    }
-
-    public void setSexo(String sexo) {
-        this.sexo = sexo;
-    }
-
     public Date getFechaNacimiento() {
         return fechaNacimiento;
     }
@@ -165,13 +149,12 @@ public class Persona implements Serializable {
         this.estudianteEspol = estudianteEspol;
     }
 
-    @XmlTransient
-    public Collection<Usuario> getUsuarioCollection() {
-        return usuarioCollection;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setUsuarioCollection(Collection<Usuario> usuarioCollection) {
-        this.usuarioCollection = usuarioCollection;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
     @Override

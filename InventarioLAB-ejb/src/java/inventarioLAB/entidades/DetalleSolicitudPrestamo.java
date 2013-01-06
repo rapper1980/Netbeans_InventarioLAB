@@ -16,8 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -25,38 +23,30 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Edward J. Holguín Holguín
  */
 @Entity
-@Table(name = "detalle_solicitud_prestamo")
+@Table(name = "detalle_solicitud_prestamo", catalog = "inventario_lab", schema = "public")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "DetalleSolicitudPrestamo.findAll", query = "SELECT d FROM DetalleSolicitudPrestamo d"),
-    @NamedQuery(name = "DetalleSolicitudPrestamo.findByIdDetalle", query = "SELECT d FROM DetalleSolicitudPrestamo d WHERE d.idDetalle = :idDetalle"),
-    @NamedQuery(name = "DetalleSolicitudPrestamo.findByEquipoSerie", query = "SELECT d FROM DetalleSolicitudPrestamo d WHERE d.equipoSerie = :equipoSerie")})
+    @NamedQuery(name = "DetalleSolicitudPrestamo.findByIdDetalle", query = "SELECT d FROM DetalleSolicitudPrestamo d WHERE d.idDetalle = :idDetalle")})
 public class DetalleSolicitudPrestamo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "id_detalle")
+    @Column(name = "id_detalle", nullable = false)
     private Integer idDetalle;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 15)
-    @Column(name = "equipo_serie")
-    private String equipoSerie;
-    @JoinColumn(name = "id_solicitud_prestamo", referencedColumnName = "id_solicitud_prestamo")
+    @JoinColumn(name = "id_solicitud_prestamo", referencedColumnName = "id_solicitud_prestamo", nullable = false)
     @ManyToOne(optional = false)
     private SolicitudPrestamo idSolicitudPrestamo;
+    @JoinColumn(name = "equipo_codigo", referencedColumnName = "codigo", nullable = false)
+    @ManyToOne(optional = false)
+    private Equipo equipoCodigo;
 
     public DetalleSolicitudPrestamo() {
     }
 
     public DetalleSolicitudPrestamo(Integer idDetalle) {
         this.idDetalle = idDetalle;
-    }
-
-    public DetalleSolicitudPrestamo(Integer idDetalle, String equipoSerie) {
-        this.idDetalle = idDetalle;
-        this.equipoSerie = equipoSerie;
     }
 
     public Integer getIdDetalle() {
@@ -67,20 +57,20 @@ public class DetalleSolicitudPrestamo implements Serializable {
         this.idDetalle = idDetalle;
     }
 
-    public String getEquipoSerie() {
-        return equipoSerie;
-    }
-
-    public void setEquipoSerie(String equipoSerie) {
-        this.equipoSerie = equipoSerie;
-    }
-
     public SolicitudPrestamo getIdSolicitudPrestamo() {
         return idSolicitudPrestamo;
     }
 
     public void setIdSolicitudPrestamo(SolicitudPrestamo idSolicitudPrestamo) {
         this.idSolicitudPrestamo = idSolicitudPrestamo;
+    }
+
+    public Equipo getEquipoCodigo() {
+        return equipoCodigo;
+    }
+
+    public void setEquipoCodigo(Equipo equipoCodigo) {
+        this.equipoCodigo = equipoCodigo;
     }
 
     @Override
