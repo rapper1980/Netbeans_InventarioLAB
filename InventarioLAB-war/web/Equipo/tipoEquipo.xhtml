@@ -36,11 +36,13 @@
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">                        
-                        <a4j:commandButton value="Registrar Tipo de equipo" action="#{tipoEquipoManagedBean.registrarTipoEquipo()}" render="table"/>
+                        <a4j:commandButton value="Registrar Tipo de equipo" action="#{tipoEquipoManagedBean.registrarTipoEquipo()}" render="table" execute="@this"/>
                     </f:facet>
                 </h:panelGrid>
             
         </rich:panel>
+        </h:form>
+        <h:form id="editDeleteTipo">
         <h2>Lista de Tipo de Equipo</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show(); #{tipoEquipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
         <rich:dataTable value="#{tipoEquipoManagedBean.getTodosTipos()}" var="tipo" iterationStatusVar="it" id="table" rows="30">

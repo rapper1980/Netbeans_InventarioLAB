@@ -76,7 +76,8 @@
                     </f:facet>
                 </h:panelGrid>
             </rich:panel>                 
-
+        </h:form>
+        <h:form id="editDeleteEquipo">            
             <h2>Lista de Equipo</h2>
             <a4j:status onstart="#{rich:component('statPane')}.show(); #{equipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
             <rich:dataTable value="#{equipoManagedBean.getTodosTipos()}" var="equipo" iterationStatusVar="it" id="table" rows="30">
@@ -176,9 +177,7 @@
                 <a4j:commandButton value="Store" action="#{equipoManagedBean.editarEquipo()}" render="table" execute="editPane"
                     oncomplete="{if (#{facesContext.maximumSeverity==null})#{rich:component('editPane')}.hide();}" />
                 <a4j:commandButton value="Cancel" onclick="#{rich:component('editPane')}.hide(); return false;" />
-        </rich:popupPanel>
-            
-            
+        </rich:popupPanel> 
         </h:form>
     </ui:define>
 
