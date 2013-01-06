@@ -35,15 +35,11 @@ public class PersonalBean implements Serializable{
     private int clientRows;
 
     public PersonalBean() {
-        this.todosUsuarios = new ArrayList<Usuario>();
-        for(int i = 0; i < 5; i++){
-            Usuario tmp = new Usuario("edwjholg" + i, "A", "ESPOL", "USUARIO", null, null, "Yo mismo","2");
-            Persona tmpp = new Persona(1, "CED", "1309991964", "EDWARD", "HOLGUIN", "M", null);
-            EstudianteEspol infoESPOL = new EstudianteEspol(1, "FIEC", "IN", "COM", "MUl");
-            tmpp.setEstudianteEspol(infoESPOL);
-            tmp.setIdPersona(tmpp);
-            this.todosUsuarios.add(tmp);
-        }
+//        this.todosUsuarios = new ArrayList<Usuario>();
+//        for(int i = 0; i < 5; i++){
+//            
+//            this.todosUsuarios.add(tmp);
+//        }
     }
 
     
