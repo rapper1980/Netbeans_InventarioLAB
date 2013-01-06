@@ -21,16 +21,18 @@
                         </h:inputText>
                         <rich:message for="descripcion" ajaxRendered="true" />
 
-                        <h:outputText value="Autorizacion" />
-                        <h:inputText label="autorizacion" id="autorizacion"
-                                     value="#{tipoEquipoManagedBean.tipoEquipo.autorizacion}">
-                        </h:inputText>
+                        <h:outputText value="Autorizacion" />                        
+                        <h:selectOneMenu label="autorizacion" id="autorizacion" value="#{tipoEquipoManagedBean.tipoEquipo.autorizacion}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Requerida" itemValue="S"/>
+                            <f:selectItem itemLabel="No requerida" itemValue="N"/>
+                         </h:selectOneMenu>
                         <rich:message for="autorizacion" ajaxRendered="true" />
 
                         <h:outputText value="Prestar" />
-                        <h:inputText label="prestar" id="prestar"
-                                     value="#{tipoEquipoManagedBean.tipoEquipo.prestar}">
-                        </h:inputText>
+                        <h:selectOneMenu label="prestar" id="prestar" value="#{tipoEquipoManagedBean.tipoEquipo.prestar}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Prestable" itemValue="S"/>
+                            <f:selectItem itemLabel="No Prestable" itemValue="N"/>
+                         </h:selectOneMenu>
                         <rich:message for="prestar" ajaxRendered="true" />
 
                     </rich:validator>
@@ -83,7 +85,7 @@
             <a4j:commandButton value="Cancelar" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
             <a4j:commandButton value="Eliminar" onclick="eliminar(); return false;" render="table" />
         </rich:popupPanel>
-        <rich:popupPanel header="Editar detalles de tipo de Equipo" id="editPane" domElementAttachment="parent" width="400" height="240">
+        <rich:popupPanel header="Editar detalles de tipo de Equipo" id="editPane" domElementAttachment="parent" width="320" height="180">
                 <h:panelGrid columns="3" id="editGrid">
                     <h:outputText value="ID" />
                     <h:outputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.idTipoEquipo}" />
@@ -94,14 +96,16 @@
                     </h:inputText>
                     <rich:message id="codigoMsg" for="dscrpEdit" />  
                     <h:outputText value="Autorización" />
-                    <h:inputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.autorizacion}" required="true" requiredMessage="Especificar tipo de autorización" id="autoEdit"
-                        converterMessage="Tipo de autorización no válida" validatorMessage="Tipo de autorización no válida" label="">
-                    </h:inputText>
+                    <h:selectOneMenu label="" id="autoEdit" value="#{tipoEquipoManagedBean.tipoEquipoEditado.autorizacion}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Requerida" itemValue="S"/>
+                            <f:selectItem itemLabel="No requerida" itemValue="N"/>
+                    </h:selectOneMenu>
                     <rich:message id="nombreMsg" for="autoEdit" />  
                     <h:outputText value="Prestar" />
-                    <h:inputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.prestar}" required="true" requiredMessage="Especificar si se puede prestar" id="prestEdit"
-                        converterMessage="Especificación no válida" validatorMessage="Especificación no válida" label="">
-                    </h:inputText>
+                    <h:selectOneMenu label="" id="prestEdit" value="#{tipoEquipoManagedBean.tipoEquipoEditado.prestar}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Prestable" itemValue="S"/>
+                            <f:selectItem itemLabel="No Prestable" itemValue="N"/>
+                    </h:selectOneMenu>
                     <rich:message id="serieMsg" for="prestEdit" />                                          
                 </h:panelGrid>
                 <a4j:commandButton value="Store" action="#{tipoEquipoManagedBean.editarTipoEquipo()}" render="table" execute="editPane"

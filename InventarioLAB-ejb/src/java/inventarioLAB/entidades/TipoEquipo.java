@@ -137,7 +137,8 @@ public class TipoEquipo implements Serializable {
 
     @Override
     public String toString() {
-        return "inventarioLAB.entidades.TipoEquipo[ idTipoEquipo=" + idTipoEquipo + " ]";
+        //return "inventarioLAB.entidades.TipoEquipo[ idTipoEquipo=" + idTipoEquipo + " ]";
+        return descripcion;
     }
     
 }
