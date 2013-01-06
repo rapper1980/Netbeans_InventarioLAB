@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a4j="http://richfaces.org/a4j"
@@ -71,51 +72,114 @@
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">
-                        <a4j:commandButton value="Registrar equipo" action="#{equipoManagedBean.registrarEquipo()}" render="table"/>
+                        <a4j:commandButton value="Registrar equipo" action="#{equipoManagedBean.createEquipo()}" render="table"/>
                     </f:facet>
                 </h:panelGrid>
-            </rich:panel>         
+            </rich:panel>                 
+
+            <h2>Lista de Equipo</h2>
+            <a4j:status onstart="#{rich:component('statPane')}.show(); #{equipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
+            <rich:dataTable value="#{equipoManagedBean.getTodosTipos()}" var="equipo" iterationStatusVar="it" id="table" rows="30">
+                <rich:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{equipo.idEquipo}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Codigo</f:facet>
+                    <h:outputText value="#{equipo.codigo}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Nombre</f:facet>
+                    <h:outputText value="#{equipo.nombre}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Serie</f:facet>
+                    <h:outputText value="#{equipo.serie}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Marca</f:facet>
+                    <h:outputText value="#{equipo.marca}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Modelo</f:facet>
+                    <h:outputText value="#{equipo.modelo}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Tipo</f:facet>
+                    <h:outputText value="#{equipo.idTipoEquipo.descripcion}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Precio</f:facet>
+                    <h:outputText value="#{equipo.precio}" />
+                </rich:column>
+                <rich:column>
+                    <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
+                                     oncomplete="#{rich:component('confirmPane')}.show()">
+                        <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
+                        <a4j:param value="#{equipo.idEquipo}" assignTo="#{equipoManagedBean.currentIdEquipo}" />
+                    </a4j:commandLink>
+                    <a4j:commandLink styleClass="no-decor" render="editGrid" execute="@this"
+                                     oncomplete="#{rich:component('editPane')}.show()">
+                        <h:graphicImage value="/imagenes/tools/edit.gif" alt="edit" />
+                        <a4j:param value="#{equipo.idEquipo}" assignTo="#{equipoManagedBean.currentIdEquipo}" />
+                        <f:setPropertyActionListener target="#{equipoManagedBean.equipoEditado}" value="#{equipo}" />
+                    </a4j:commandLink>
+                </rich:column>
+            </rich:dataTable>
+            
+            <a4j:jsFunction name="eliminar" action="#{equipoManagedBean.eliminarEquipo()}" render="table" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+            
+            <rich:popupPanel id="confirmPane" autosized="true">
+                ¿Esta seguro de eliminar el registro?
+                <a4j:commandButton value="Cancelar" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
+                <a4j:commandButton value="Eliminar" onclick="eliminar(); return false;" render="table" />
+            </rich:popupPanel>
+            
+            <rich:popupPanel header="Editar detalles de Equipo" id="editPane" domElementAttachment="parent" width="400" height="240">
+                <h:panelGrid columns="3" id="editGrid">
+                    <h:outputText value="ID" />
+                    <h:outputText value="#{equipoManagedBean.equipoEditado.idEquipo}" />
+                    <h:panelGroup />
+                    <h:outputText value="Código" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.codigo}" required="true" requiredMessage="Es requerido un código" id="codigoEdit"
+                        converterMessage="Código ingresado no válido" validatorMessage="Código ingresado no válido" label="">
+                    </h:inputText>
+                    <rich:message id="codigoMsg" for="codigoEdit" />  
+                    <h:outputText value="Nombre" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.nombre}" required="true" requiredMessage="Es requerido un nombre" id="nombreEdit"
+                        converterMessage="Nombre ingresado no válido" validatorMessage="Nombre ingresado no válido" label="">
+                    </h:inputText>
+                    <rich:message id="nombreMsg" for="nombreEdit" />  
+                    <h:outputText value="Serie" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.serie}" required="true" requiredMessage="Es requerido un número de serie" id="serieEdit"
+                        converterMessage="Serie ingresada no válida" validatorMessage="Serie ingresada no válida" label="">
+                    </h:inputText>
+                    <rich:message id="serieMsg" for="serieEdit" />  
+                    <h:outputText value="Marca" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.marca}" required="true" requiredMessage="Es requerido una marca" id="marcaEdit"
+                        converterMessage="Marca ingresada no válida" validatorMessage="Marca ingresada no válida" label="">
+                    </h:inputText>
+                    <rich:message id="marcaMsg" for="marcaEdit" /> 
+                    <h:outputText value="Modelo" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.modelo}" required="true" requiredMessage="Es requerido un modelo" id="modeloEdit"
+                        converterMessage="Modelo ingresado no válido" validatorMessage="Modelo ingresado no válido" label="">
+                    </h:inputText>
+                    <rich:message id="modeloMsg" for="modeloEdit" />
+                    <h:outputText value="Precio" />
+                    <h:inputText value="#{equipoManagedBean.equipoEditado.precio}" required="true" requiredMessage="Es requerido un precio" id="precioEdit"
+                        converterMessage="Precio ingresado no válido" validatorMessage="Precio ingresado no válido" label="Price field">
+                        <f:validateDoubleRange minimum="0.00" maximum="99999999"/>
+                    </h:inputText>
+                    <rich:message id="priceMsg" for="precioEdit" />                    
+                </h:panelGrid>
+                <a4j:commandButton value="Store" action="#{equipoManagedBean.editarEquipo()}" render="table" execute="editPane"
+                    oncomplete="{if (#{facesContext.maximumSeverity==null})#{rich:component('editPane')}.hide();}" />
+                <a4j:commandButton value="Cancel" onclick="#{rich:component('editPane')}.hide(); return false;" />
+        </rich:popupPanel>
+            
+            
         </h:form>
-        
-        <h2>Lista de Equipo</h2>
-        <a4j:status onstart="#{rich:component('statPane')}.show(); #{equipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
-        <rich:dataTable value="#{equipoManagedBean.getTodosTipos()}" var="equipo" iterationStatusVar="it" id="table" rows="30">
-            <rich:column>
-                <f:facet name="header">#</f:facet>
-                #{it.index}
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Codigo</f:facet>
-                <h:outputText value="#{equipo.codigo}" />
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Nombre</f:facet>
-                <h:outputText value="#{equipo.nombre}" />
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Serie</f:facet>
-                <h:outputText value="#{equipo.serie}" />
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Marca</f:facet>
-                <h:outputText value="#{equipo.marca}" />
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Modelo</f:facet>
-                <h:outputText value="#{equipo.modelo}" />
-            </rich:column>
-            <rich:column>
-                <f:facet name="header">Precio</f:facet>
-                <h:outputText value="#{equipo.precio}" />
-            </rich:column>
-            <rich:column>
-                <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
-                                 oncomplete="#{rich:component('confirmPane')}.show()">
-                    <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
-                    <a4j:param value="#{it.index}" assignTo="#{equipoManagedBean.currentIndex}" />
-                </a4j:commandLink>
-            </rich:column>
-        </rich:dataTable>
     </ui:define>
 
 </ui:composition>

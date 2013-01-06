@@ -43,19 +43,19 @@ public class Equipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @Column(name = "id_equipo")
     private Integer idEquipo;
     @Size(max = 15)
     @Column(name = "serie")
     private String serie;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 15)
     @Column(name = "codigo")
     private String codigo;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 20)
     @Column(name = "nombre")
     private String nombre;
@@ -72,7 +72,7 @@ public class Equipo implements Serializable {
     @Column(name = "ubicacion")
     private String ubicacion;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 3)
     @Column(name = "estado")
     private String estado;

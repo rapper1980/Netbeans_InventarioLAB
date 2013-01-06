@@ -24,22 +24,22 @@
 		<from-view-id>/*</from-view-id>
 		<navigation-case>
 			<from-outcome>gestionEquipo</from-outcome>
-			<to-view-id>/faces/Equipo/equipo.xhtml</to-view-id>
+			<to-view-id>/Equipo/equipo.xhtml</to-view-id>
                         <redirect/>
 		</navigation-case>
 		<navigation-case>
 			<from-outcome>gestionTipoEquipo</from-outcome>
-			<to-view-id>/faces/Equipo/tipoEquipo.xhtml</to-view-id>
+			<to-view-id>/Equipo/tipoEquipo.xhtml</to-view-id>
                         <redirect/>
 		</navigation-case>
                 <navigation-case>
 			<from-outcome>registrarPersonal</from-outcome>
-			<to-view-id>/faces/registrarPersonal.xhtml</to-view-id>
+			<to-view-id>/registrarPersonal.xhtml</to-view-id>
                         <redirect/>
 		</navigation-case>
                 <navigation-case>
 			<from-outcome>gestionPersonal</from-outcome>
-			<to-view-id>/faces/personal.xhtml</to-view-id>
+			<to-view-id>/personal.xhtml</to-view-id>
                         <redirect/>
 		</navigation-case>
 	</navigation-rule>

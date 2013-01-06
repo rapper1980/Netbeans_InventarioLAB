@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:a4j="http://richfaces.org/a4j"
@@ -8,13 +9,9 @@
                 template="./../main.xhtml">
 
     <ui:define name="cuerpo">
-        <h:outputStylesheet>
-            a.no-decor>img {
-            border: none;
-            }
-        </h:outputStylesheet>
+        <h:form id="crear_tipoEquipo">
         <rich:panel header="Nuevo Tipo Equipo" >
-            <h:form id="crear_tipoEquipo">
+            
                 <h:panelGrid columns="3">
                     <rich:validator>
                         <h:outputText value="Descripcion" />
@@ -42,14 +39,14 @@
                         <a4j:commandButton value="Registrar Tipo de equipo" action="#{tipoEquipoManagedBean.registrarTipoEquipo()}" render="table"/>
                     </f:facet>
                 </h:panelGrid>
-            </h:form>
+            
         </rich:panel>
         <h2>Lista de Tipo de Equipo</h2>
         <a4j:status onstart="#{rich:component('statPane')}.show(); #{tipoEquipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
         <rich:dataTable value="#{tipoEquipoManagedBean.getTodosTipos()}" var="tipo" iterationStatusVar="it" id="table" rows="30">
             <rich:column>
-                <f:facet name="header">#</f:facet>
-                #{it.index}
+                <f:facet name="header">ID</f:facet>
+                #{tipo.idTipoEquipo}
             </rich:column>
             <rich:column>
                 <f:facet name="header">Descripcion</f:facet>
@@ -67,9 +64,48 @@
                 <a4j:commandLink styleClass="no-decor" execute="@this" render="@none"
                                  oncomplete="#{rich:component('confirmPane')}.show()">
                     <h:graphicImage value="/imagenes/tools/delete.gif" alt="delete" />
-                    <a4j:param value="#{it.index}" assignTo="#{tipoEquipoManagedBean.currentIndex}" />
+                    <a4j:param value="#{tipo.idTipoEquipo}" assignTo="#{tipoEquipoManagedBean.currentIdTipo}" />
+                </a4j:commandLink>
+                <a4j:commandLink styleClass="no-decor" render="editGrid" execute="@this"
+                                     oncomplete="#{rich:component('editPane')}.show()">
+                        <h:graphicImage value="/imagenes/tools/edit.gif" alt="edit" />
+                        <a4j:param value="#{tipo.idTipoEquipo}" assignTo="#{tipoEquipoManagedBean.currentIdTipo}" />
+                        <f:setPropertyActionListener target="#{tipoEquipoManagedBean.tipoEquipoEditado}" value="#{tipo}" />
                 </a4j:commandLink>
             </rich:column>
         </rich:dataTable>
+        <a4j:jsFunction name="eliminar" action="#{tipoEquipoManagedBean.eliminarTipoEquipo()}" render="table" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+        <rich:popupPanel id="confirmPane" autosized="true">
+            ¿Esta seguro de eliminar el registro?
+            <a4j:commandButton value="Cancelar" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
+            <a4j:commandButton value="Eliminar" onclick="eliminar(); return false;" render="table" />
+        </rich:popupPanel>
+        <rich:popupPanel header="Editar detalles de tipo de Equipo" id="editPane" domElementAttachment="parent" width="400" height="240">
+                <h:panelGrid columns="3" id="editGrid">
+                    <h:outputText value="ID" />
+                    <h:outputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.idTipoEquipo}" />
+                    <h:panelGroup />
+                    <h:outputText value="Descripción" />
+                    <h:inputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.descripcion}" required="true" requiredMessage="Es requerido una descripción" id="dscrpEdit"
+                        converterMessage="Descripción ingresada no válida" validatorMessage="Descripción ingresada no válida" label="">
+                    </h:inputText>
+                    <rich:message id="codigoMsg" for="dscrpEdit" />  
+                    <h:outputText value="Autorización" />
+                    <h:inputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.autorizacion}" required="true" requiredMessage="Especificar tipo de autorización" id="autoEdit"
+                        converterMessage="Tipo de autorización no válida" validatorMessage="Tipo de autorización no válida" label="">
+                    </h:inputText>
+                    <rich:message id="nombreMsg" for="autoEdit" />  
+                    <h:outputText value="Prestar" />
+                    <h:inputText value="#{tipoEquipoManagedBean.tipoEquipoEditado.prestar}" required="true" requiredMessage="Especificar si se puede prestar" id="prestEdit"
+                        converterMessage="Especificación no válida" validatorMessage="Especificación no válida" label="">
+                    </h:inputText>
+                    <rich:message id="serieMsg" for="prestEdit" />                                          
+                </h:panelGrid>
+                <a4j:commandButton value="Store" action="#{tipoEquipoManagedBean.editarTipoEquipo()}" render="table" execute="editPane"
+                    oncomplete="{if (#{facesContext.maximumSeverity==null})#{rich:component('editPane')}.hide();}" />
+                <a4j:commandButton value="Cancel" onclick="#{rich:component('editPane')}.hide(); return false;" />
+        </rich:popupPanel>
+        </h:form>
     </ui:define>
 </ui:composition>

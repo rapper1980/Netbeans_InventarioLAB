@@ -39,21 +39,21 @@ public class TipoEquipo implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Basic(optional = false)
+    //@Basic(optional = false)
     @Column(name = "id_tipo_equipo")
     private Integer idTipoEquipo;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 30)
     @Column(name = "descripcion")
     private String descripcion;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 1)
     @Column(name = "prestar")
     private String prestar;
     @Basic(optional = false)
-    @NotNull
+    //@NotNull
     @Size(min = 1, max = 1)
     @Column(name = "autorizacion")
     private String autorizacion;
