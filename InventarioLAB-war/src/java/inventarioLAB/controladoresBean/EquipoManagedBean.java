@@ -118,7 +118,11 @@ public class EquipoManagedBean implements Serializable {
         this.clearTodos();
         return JsfUtil.getAllEquipos(equipoFacadeLocal.findAll(), this.todosEquipos);
     }
-
+    
+    public List<Equipo> getTodosPrestables(){
+        this.clearTodos();
+        return JsfUtil.getAllPrestables(this.getTodosTipos());
+    }
     public void clearTodos() {
         this.todosEquipos = new ArrayList<Equipo>();
     }
