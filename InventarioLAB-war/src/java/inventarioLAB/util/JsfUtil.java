@@ -2,6 +2,7 @@ package inventarioLAB.util;
 
 import inventarioLAB.entidades.Equipo;
 import inventarioLAB.entidades.TipoEquipo;
+import java.util.ArrayList;
 import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -38,7 +39,18 @@ public class JsfUtil {
         }
         return todosTipos;
     }
-    
+    public static List<Equipo> getAllPrestables(List<Equipo> allEquipos) {
+        List<Equipo> todosPrestables = new ArrayList<Equipo>();
+        for(Object x : allEquipos){            
+            Equipo tmp = new Equipo();
+            tmp = (Equipo)x;
+            if(tmp.getEstado().equalsIgnoreCase("DIS"))
+            {
+                todosPrestables.add(tmp);
+            }
+        }
+        return todosPrestables;
+    }
     public static List<Equipo> getAllEquipos(List<Equipo> entities, List<Equipo> todosEquipos) {
         int size = entities.size();        
         int i=0;
