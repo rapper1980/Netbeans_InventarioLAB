@@ -58,17 +58,13 @@
                         <rich:message for="modelo" ajaxRendered="true" />
 
                         <h:outputText value="Estado" />
-                        <h:inputText label="estado" id="estadi"
-                                     value="#{equipoManagedBean.selected.estado}">
-                        </h:inputText>
+                        <h:selectOneMenu label="estado" id="estado" value="#{equipoManagedBean.selected.estado}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Disponible" itemValue="DIS"/>
+                            <f:selectItem itemLabel="Prestado" itemValue="PRE"/>
+                            <f:selectItem itemLabel="Dañado" itemValue="DAN"/>
+                            <f:selectItem itemLabel="Reparación" itemValue="REP"/>
+                        </h:selectOneMenu>
                         <rich:message for="estado" ajaxRendered="true" />
-
-                        <h:outputText value="Ubicacion" />
-                        <h:inputText label="ubicacion" id="ubicacion"
-                                     value="#{equipoManagedBean.selected.ubicacion}">
-                        </h:inputText>
-                        <rich:message for="ubicacion" ajaxRendered="true" />
-
                     </rich:validator>
                     <rich:notifyMessages stayTime="2000" nonblocking="true" />
                     <f:facet name="footer">
@@ -110,6 +106,10 @@
                     <h:outputText value="#{equipo.idTipoEquipo.descripcion}" />
                 </rich:column>
                 <rich:column>
+                    <f:facet name="header">Estado</f:facet>
+                    <h:outputText value="#{equipo.estado}" />
+                </rich:column>
+                <rich:column>
                     <f:facet name="header">Precio</f:facet>
                     <h:outputText value="#{equipo.precio}" />
                 </rich:column>
@@ -137,16 +137,14 @@
                 <a4j:commandButton value="Eliminar" onclick="eliminar(); return false;" render="table" />
             </rich:popupPanel>
             
-            <rich:popupPanel header="Editar detalles de Equipo" id="editPane" domElementAttachment="parent" width="400" height="240">
+            <rich:popupPanel header="Editar detalles de Equipo" id="editPane" domElementAttachment="parent" width="400" height="290">
                 <h:panelGrid columns="3" id="editGrid">
                     <h:outputText value="ID" />
                     <h:outputText value="#{equipoManagedBean.equipoEditado.idEquipo}" />
                     <h:panelGroup />
                     <h:outputText value="Código" />
-                    <h:inputText value="#{equipoManagedBean.equipoEditado.codigo}" required="true" requiredMessage="Es requerido un código" id="codigoEdit"
-                        converterMessage="Código ingresado no válido" validatorMessage="Código ingresado no válido" label="">
-                    </h:inputText>
-                    <rich:message id="codigoMsg" for="codigoEdit" />  
+                    <h:outputText value="#{equipoManagedBean.equipoEditado.codigo}" />
+                    <h:panelGroup /> 
                     <h:outputText value="Nombre" />
                     <h:inputText value="#{equipoManagedBean.equipoEditado.nombre}" required="true" requiredMessage="Es requerido un nombre" id="nombreEdit"
                         converterMessage="Nombre ingresado no válido" validatorMessage="Nombre ingresado no válido" label="">
@@ -167,6 +165,19 @@
                         converterMessage="Modelo ingresado no válido" validatorMessage="Modelo ingresado no válido" label="">
                     </h:inputText>
                     <rich:message id="modeloMsg" for="modeloEdit" />
+                    <h:outputText value="Tipo" />
+                    <h:selectOneMenu id="tipoEdit" value="#{equipoManagedBean.equipoEditado.idTipoEquipo}" style="width:12em;" required="true">
+                            <f:selectItems value="#{tipoEquipoManagedBean.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <rich:message id="tipoMsg" for="tipoEdit" />
+                    <h:outputText value="Estado" />
+                    <h:selectOneMenu label="estadoEdit" id="estadoEdit" value="#{equipoManagedBean.equipoEditado.estado}" style="width:12em;" required="true">
+                            <f:selectItem itemLabel="Disponible" itemValue="DIS"/>
+                            <f:selectItem itemLabel="Prestado" itemValue="PRE"/>
+                            <f:selectItem itemLabel="Dañado" itemValue="DAN"/>
+                            <f:selectItem itemLabel="Reparación" itemValue="REP"/>
+                    </h:selectOneMenu>
+                    <rich:message id="estadoMsg" for="estadoEdit" />
                     <h:outputText value="Precio" />
                     <h:inputText value="#{equipoManagedBean.equipoEditado.precio}" required="true" requiredMessage="Es requerido un precio" id="precioEdit"
                         converterMessage="Precio ingresado no válido" validatorMessage="Precio ingresado no válido" label="Price field">
