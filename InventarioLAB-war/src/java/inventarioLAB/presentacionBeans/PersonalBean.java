@@ -7,10 +7,14 @@ package inventarioLAB.presentacionBeans;
 import inventarioLAB.entidades.EstudianteEspol;
 import inventarioLAB.entidades.Persona;
 import inventarioLAB.entidades.Usuario;
+import inventarioLAB.logica.UsuarioFacade;
+import inventarioLAB.logica.UsuarioFacadeLocal;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ValueChangeEvent;
@@ -33,13 +37,16 @@ public class PersonalBean implements Serializable{
     private int pagina = 1;
     
     private int clientRows;
+    
+    @EJB
+    private UsuarioFacadeLocal usuarioFacadeLocal;
+    //Filtros
+    private String estadoActual = "A";
+    private int filtro = 1;
 
     public PersonalBean() {
-//        this.todosUsuarios = new ArrayList<Usuario>();
-//        for(int i = 0; i < 5; i++){
-//            
-//            this.todosUsuarios.add(tmp);
-//        }
+        this.usuarioFacadeLocal = new UsuarioFacade();
+        this.todosUsuarios = new ArrayList<Usuario>();
     }
 
     
@@ -56,6 +63,7 @@ public class PersonalBean implements Serializable{
     }
 
     public List<Usuario> getTodosUsuarios() {
+        this.todosUsuarios.addAll(this.usuarioFacadeLocal.obtenerUsuarios("A"));
         return todosUsuarios;
     }
 
@@ -93,6 +101,14 @@ public class PersonalBean implements Serializable{
 
     public void setClientRows(int clientRows) {
         this.clientRows = clientRows;
+    }
+
+    public String getEstadoActual() {
+        return estadoActual;
+    }
+
+    public void setEstadoActual(String estadoActual) {
+        this.estadoActual = estadoActual;
     }
     
     

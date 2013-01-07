@@ -30,7 +30,7 @@ import javax.faces.bean.SessionScoped;
  *
  * @author Edward J. Holguín Holguín
  */
-@ManagedBean
+@ManagedBean(name="personaManagedBean")
 @SessionScoped
 public class PersonaManagedBean {
     @EJB

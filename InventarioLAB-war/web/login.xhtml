@@ -62,20 +62,23 @@
                                 <h2> Log In </h2>
                                 <div>
                                     <h:outputLabel id="lab_usuario" styleClass="lab_usuario" for="inp_usuario" value="Usuario"></h:outputLabel>
-                                    <h:inputText id="inp_usuario" styleClass="inp_usuario" required="true" requiredMessage="Ingrese usuario ESPOL/Invetario" value="#{usuarioManageBean.usuarioSesion.usuario}"></h:inputText>
+                                    <h:inputText id="inp_usuario" styleClass="inp_usuario" required="true" requiredMessage="Ingrese usuario ESPOL/Invetario" value="#{usuarioManagedBean.usuarioSesion.usuario}"></h:inputText>
                                     <h:outputLabel value="@espol.edu.ec"></h:outputLabel>
                                 </div>
                                 <div>
                                     <h:outputLabel id="lab_clave" styleClass="lab_clave" for="inp_clave" value="Clave"></h:outputLabel>
-                                    <h:inputSecret id="inp_clave" styleClass="inp_clave" required="true" requiredMessage="La clave es requerida" value="#{usuarioManageBean.usuarioSesion.clave}"></h:inputSecret>
+                                    <h:inputSecret id="inp_clave" styleClass="inp_clave" required="true" requiredMessage="La clave es requerida" value="#{usuarioManagedBean.usuarioSesion.clave}"></h:inputSecret>
                                 </div>
                                 <div>
                                     <h:outputLabel id="lab_tipo" styleClass="lab_tipo" for="inp_clave" value="Modo"></h:outputLabel>
-                                    <h:selectOneMenu id="sel_tipo" styleClass="sel_tipo"></h:selectOneMenu>
+                                    <h:selectOneMenu id="sel_tipo" styleClass="sel_tipo" value="#{usuarioManagedBean.usuarioSesion.modoAutenticacion}" >
+                                        <f:selectItem itemLabel="WS ESPOL" itemValue="WSE" />
+                                        <f:selectItem itemLabel="INTERNA" itemValue="INT" />
+                                    </h:selectOneMenu>
                                 </div>
                                 <div>
                                     <a class="a_olvidar" href="http://espol.edu.ec">¿Olvidastes tu contraseña?</a>
-                                    <h:commandButton styleClass="btn_login" value="Login" action="#{usuarioManageBean.iniciarSesion()}"></h:commandButton>
+                                    <h:commandButton styleClass="btn_login" value="Login" action="#{usuarioManagedBean.iniciarSesion()}"></h:commandButton>
                                 </div>
                                 <div class="change_link">
                                     Not a member yet ?

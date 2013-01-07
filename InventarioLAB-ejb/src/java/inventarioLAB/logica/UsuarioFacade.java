@@ -113,18 +113,18 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      * @param usuario 
      */
     @Override
-    public Usuario obtenerUsuario(Usuario usuario, String estado){
+    public Usuario obtenerUsuario(String usuario, String estado){
         Usuario resultado = null;
-        Query query = this.em.createNamedQuery("Usuario.findByUsuarioEstado");
+        Query query = this.em.createNamedQuery("Usuario.findByUsuario");
         query.setParameter("usuario", usuario);
-        query.setParameter("estado", estado);
+        //query.setParameter("estado", estado);
         try {
            resultado = (Usuario)query.getResultList().get(0);
         } catch (Exception e) {
             resultado = null;
         }
         
-        return usuario;
+        return resultado;
     }
 
     /**
@@ -133,9 +133,12 @@ public class UsuarioFacade extends AbstractFacade<Usuario> implements UsuarioFac
      * @return
      */
     @Override
-    public Usuario autenticar(Usuario usuario) {
+    public Usuario autenticar(String usuario, String clave) {
         Usuario resultado = null;
         
+        if(autenticacion(usuario, clave)){
+            resultado = obtenerUsuario(usuario, "A");
+        }
         
         return resultado;
     }

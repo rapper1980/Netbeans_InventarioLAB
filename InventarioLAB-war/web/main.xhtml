@@ -28,11 +28,11 @@
                     <h:form>
                         <div id="usuario_session">
                             <h:outputText value="Bienvenido, " />
-                            <h:outputText value="#{usuarioManageBean.usuarioSesion.idPersona.nombres}" />
-                            <h:outputText value="#{usuarioManageBean.usuarioSesion.idPersona.apellidos}" />
+                            <h:outputText value="#{usuarioManagedBean.personaSesion.nombres} " />
+                            <h:outputText value="#{usuarioManagedBean.personaSesion.apellidos}" />
                             <br />
-                            <h:outputText value="#{usuarioManageBean.usuarioSesion.usuario}" />
-                            <h:commandLink value="#{usuarioManageBean.salir()}" />
+                            <h:outputText value="#{usuarioManagedBean.personaSesion.usuario.usuario}" />
+                            <h:commandLink value="Logout" action="#{usuarioManagedBean.salir()}"/>
                         </div>
                     </h:form>
                 </div>
@@ -41,8 +41,7 @@
             <div id="menu-contenedor">
                 <h:form>
                     <rich:toolbar>
-                        
-                        <rich:dropDownMenu mode="ajax">
+                        <rich:dropDownMenu>
                             <f:facet name="label">
                                 <h:panelGroup>
                                     <!-- <h:graphicImage value="/images/icons/copy.gif" styleClass="pic" alt="copy" /> -->
@@ -51,33 +50,34 @@
                             </f:facet>
                         </rich:dropDownMenu>
 
-                        <rich:dropDownMenu mode="ajax">
+                        <rich:dropDownMenu>
                             <f:facet name="label">
                                 <h:panelGrid>
                                     <h:outputText value="Personal" />
                                 </h:panelGrid>
                             </f:facet>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" action="/Personal/personal">
                                 <h:outputText value="Gestionar Personal" />
                             </rich:menuItem>
-                            <rich:menuItem submitMode="client"
-                                           onclick="document.location.href='http://jboss.com/index.html?module=bb&amp;op=viewforum&amp;f=261'">
+                            <rich:menuItem submitMode="client" action="/Personal/registrarPersonal">
                                 <h:outputText value="Registrar Personal" />
                             </rich:menuItem>
                         </rich:dropDownMenu>
 
-                        <rich:dropDownMenu mode="ajax">
+                        <rich:dropDownMenu>
                             <f:facet name="label">
                                 <h:panelGrid>
                                     <h:outputText value="Equipos" />
                                 </h:panelGrid>
                             </f:facet>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" action="/Equipo/equipo" >
                                 <h:outputText value="Gestionar Equipos" />
                             </rich:menuItem>
-                            <rich:menuItem submitMode="client"
-                                           onclick="">
-                                <h:outputText value="Registrar Equipo" />
+                            <rich:menuItem submitMode="client" action="/Equipo/listTipo">
+                                <h:outputText value="Tipos de Equipo" />
+                            </rich:menuItem>
+                            <rich:menuItem submitMode="client" action="/Equipo/tipoEquipo">
+                                <h:outputText value="Registar Tipos de Equipo" />
                             </rich:menuItem>
                         </rich:dropDownMenu>
                         
@@ -87,10 +87,10 @@
                                     <h:outputText value="Solicitudes" />
                                 </h:panelGrid>
                             </f:facet>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" action="/Solicitudes/prestamos">
                                 <h:outputText value="Gestionar Solicitud" />
                             </rich:menuItem>
-                            <rich:menuItem submitMode="client" onclick="">
+                            <rich:menuItem submitMode="client" action="/Solicitudes/nuevaSolicitud">
                                 <h:outputText value="Nueva Solicitud" />
                             </rich:menuItem>
                         </rich:dropDownMenu>

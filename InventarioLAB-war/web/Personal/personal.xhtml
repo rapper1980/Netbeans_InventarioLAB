@@ -18,28 +18,20 @@
                 <rich:panel header="Filtros">
                     <h:form styleClass="buscar">
                         <h:panelGrid columns="3">
-                            <h:outputLabel value="Codigo" />
-                            <h:inputText />
+                            <h:outputLabel value="Estado: "/>
+                            <h:selectOneRadio value="#{personalBean.estadoActual}">
+                                <f:selectItem itemLabel="Activos" itemValue="A" />
+                                <f:selectItem itemLabel="Inactivos" itemValue="I" />
+                            </h:selectOneRadio>
                             <rich:message />
-
-                            <h:outputLabel value="Serie" />
-                            <h:inputText />
-                            <rich:message />
-
-                            <h:outputLabel value="Estado" />
-                            <h:selectOneMenu>
-                                <f:selectItem itemLabel="Disponibles" />
-                                <f:selectItem itemLabel="Prestados" />
-                                <f:selectItem itemLabel="Dañados" />
+                            
+                            <h:selectOneMenu value="#{personalBean.estadoActual}">
+                                <f:selectItem itemLabel="Matricula" itemValue="1" />
+                                <f:selectItem itemLabel="Idetificacion" itemValue="2" />
+                                <f:selectItem itemLabel="Apellidos" itemValue="3" />
+                                <f:selectItem itemLabel="Nombres" itemValue="4" />
                             </h:selectOneMenu>
-                            <rich:message />
-
-                            <h:outputLabel value="Tipo" />
-                            <h:selectOneMenu>
-                                <f:selectItem itemLabel="Prestable" />
-                                <f:selectItem itemLabel="No Prestados" />
-                                <f:selectItem itemLabel="Prestable con Autorizacion" />
-                            </h:selectOneMenu>
+                            <h:inputText />
                             <rich:message />
 
                             <f:facet name="footer">
@@ -60,28 +52,33 @@
                             </rich:column>
                             <rich:column>
                                 <f:facet name="header">Matricula</f:facet>
-                                #{personal.idPersona.estudianteEspol.matricula}
-                            </rich:column>
-                            <rich:column>
-                                <f:facet name="header">Tipo Idetificacion</f:facet>
-                                #{personal.idPersona.tipoIdentificacion}
+                                #{personal.persona.estudianteEspol.matricula}
                             </rich:column>
                             <rich:column>
                                 <f:facet name="header">Identificacion</f:facet>
-                                #{personal.idPersona.identificacion}
+                                #{personal.persona.tipoIdentificacion} - #{personal.persona.identificacion}
                             </rich:column>
                             <rich:column>
                                 <f:facet name="header">Nombres</f:facet>
-                                #{personal.idPersona.nombres}
+                                #{personal.persona.nombres}
                             </rich:column>
                             <rich:column>
                                 <f:facet name="header">Apellidos</f:facet>
-                                #{personal.idPersona.apellidos}
+                                #{personal.persona.apellidos}
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">Rol</f:facet>
+                                #{personal.rol}
+                            </rich:column>
+                            <rich:column>
+                                <f:facet name="header">Modo Autenticacion</f:facet>
+                                #{personal.modoAutenticacion}
                             </rich:column>
                             <rich:column>
                                 <f:facet name="header">Email</f:facet>
-                                #{personal.idPersona.estudianteEspol.email}
+                                #{personal.email}
                             </rich:column>
+                            
                             <rich:column>
                                 <f:facet name="header">Opciones</f:facet>
                                 <a4j:commandLink styleClass="no-decor" render="editGrid" execute="@this"

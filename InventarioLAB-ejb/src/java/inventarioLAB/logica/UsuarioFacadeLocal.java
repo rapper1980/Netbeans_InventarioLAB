@@ -32,7 +32,7 @@ public interface UsuarioFacadeLocal {
     
     void inactiva(Usuario usuario);
     
-    Usuario obtenerUsuario(Usuario usuario, String estado);
+    Usuario obtenerUsuario(String usuario, String estado);
     
     List<Usuario> obtenerUsuarios();
     
@@ -40,7 +40,7 @@ public interface UsuarioFacadeLocal {
     
     List<Usuario> obtenerUsuarios(String rol, String estado);
     
-    Usuario autenticar(Usuario usuario);
+    Usuario autenticar(String usuario, String Clave);
     
     boolean existeSuperUsuario();
 
