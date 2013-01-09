@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE composition PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:a4j="http://richfaces.org/a4j"
+                xmlns:rich="http://richfaces.org/rich"
+                template="./../main.xhtml">
+
+    <ui:define name="cuerpo">
+        <h:form id="crear_solicitud">
+            <rich:panel id="formulario" header="Nuevo Préstamo" >
+
+                <h:panelGrid columns="3">
+                    <rich:validator>
+                        <h:outputText value="Ayudante" style="font-weight:bold"/>
+                        <h:inputText label="ayudante" id="ayudante"
+                                     value="">
+                            <f:validateLength maximum="13" />
+                        </h:inputText>
+                        <rich:message for="ayudante" ajaxRendered="true" />
+
+                        <h:outputText escape="false" value="Estudiante" style="font-weight:bold"/>                        
+                        <h:inputText label="estudiante" id="prestatario"
+                                     value="">
+                            <f:validateLength maximum="13" />
+                        </h:inputText>
+                        <rich:message for="estudiante" ajaxRendered="true" />
+
+                        <h:outputText value="Fecha de préstamo" style="font-weight:bold"/>                        
+                        <h:outputText value="#{currentDate}">
+                            <f:convertDateTime pattern="DD/MM/YYYY" type="date" />
+                        </h:outputText>
+                        <h:panelGroup />
+                        <h:outputText value="ID Equipo" style="font-weight:bold"/>                        
+                        <h:outputText value="#{equipoManagedBean.equipoEditado.idEquipo}" />
+                        <h:panelGroup />
+
+                        <h:outputText value="Nombre del equipo" style="font-weight:bold"/>                        
+                        <h:outputText value="#{equipoManagedBean.equipoEditado.nombre}" />
+                        <h:panelGroup />
+
+                    </rich:validator>
+                    <rich:notifyMessages stayTime="2000" nonblocking="true" />
+                    <f:facet name="footer">                        
+                        <a4j:commandButton value="Registrar nueva Solicitud" oncomplete="#{rich:component('confirmPane')}.show()" execute="@this" render="table"/>
+                    </f:facet>
+                </h:panelGrid>
+
+            </rich:panel>
+        </h:form>
+        <h:form id="seleccionarEquipo">            
+            <h2>Lista de Equipos disponibles</h2>
+            <a4j:status onstart="#{rich:component('statPane')}.show(); #{equipoManagedBean.clearTodos()}" onstop="#{rich:component('statPane')}.hide()" />
+            <rich:dataTable value="#{equipoManagedBean.getTodosPrestables()}" var="equipo" iterationStatusVar="it" id="table" rows="30">
+                <rich:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{equipo.idEquipo}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Codigo</f:facet>
+                    <h:outputText value="#{equipo.codigo}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Nombre</f:facet>
+                    <h:outputText value="#{equipo.nombre}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Serie</f:facet>
+                    <h:outputText value="#{equipo.serie}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Marca</f:facet>
+                    <h:outputText value="#{equipo.marca}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Modelo</f:facet>
+                    <h:outputText value="#{equipo.modelo}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Tipo</f:facet>
+                    <h:outputText value="#{equipo.idTipoEquipo.descripcion}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Estado</f:facet>
+                    <h:outputText value="#{equipo.estado}" />
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Precio</f:facet>
+                    <h:outputText value="#{equipo.precio}" />
+                </rich:column>
+                <rich:column>                    
+                    <a4j:commandLink styleClass="no-decor" render="formulario" execute="@this" >
+                        <h:graphicImage value="/imagenes/tools/edit.gif" alt="delete" />
+                        <a4j:param value="#{equipo.idEquipo}" assignTo="#{equipoManagedBean.currentIdEquipo}" />
+                        <f:setPropertyActionListener target="#{equipoManagedBean.equipoEditado}" value="#{equipo}" />
+                    </a4j:commandLink>
+                </rich:column>
+            </rich:dataTable>
+
+            <a4j:jsFunction name="crear" action="#{solicitudManagedBean.crearSolicitud()}" render="table" execute="@this"
+                            oncomplete="#{rich:component('confirmPane')}.hide();" />
+
+            <rich:popupPanel id="confirmPane" autosized="true">
+                ¿Esta seguro de realizar el préstamo?
+                <a4j:commandButton value="Cancelar" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
+                <a4j:commandButton value="Proceder" onclick="crear(); return false;" render="formulario" />
+            </rich:popupPanel>                       
+        </h:form>
+    </ui:define>
+
+</ui:composition>
