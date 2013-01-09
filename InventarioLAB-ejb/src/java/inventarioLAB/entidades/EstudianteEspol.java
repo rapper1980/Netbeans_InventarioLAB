@@ -5,23 +5,19 @@
 package inventarioLAB.entidades;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -87,8 +83,6 @@ public class EstudianteEspol implements Serializable {
     @JoinColumn(name = "id_persona", referencedColumnName = "id_persona", nullable = false, insertable = false, updatable = false)
     @OneToOne(optional = false)
     private Persona persona;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "matricula")
-    private List<SolicitudPrestamo> solicitudPrestamoList;
 
     public EstudianteEspol() {
     }
@@ -178,15 +172,6 @@ public class EstudianteEspol implements Serializable {
 
     public void setPersona(Persona persona) {
         this.persona = persona;
-    }
-
-    @XmlTransient
-    public List<SolicitudPrestamo> getSolicitudPrestamoList() {
-        return solicitudPrestamoList;
-    }
-
-    public void setSolicitudPrestamoList(List<SolicitudPrestamo> solicitudPrestamoList) {
-        this.solicitudPrestamoList = solicitudPrestamoList;
     }
 
     @Override

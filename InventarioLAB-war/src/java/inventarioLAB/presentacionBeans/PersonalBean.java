@@ -43,6 +43,7 @@ public class PersonalBean implements Serializable{
     //Filtros
     private String estadoActual = "A";
     private int filtro = 1;
+    private String txt = "";
 
     public PersonalBean() {
         this.usuarioFacadeLocal = new UsuarioFacade();
@@ -62,8 +63,12 @@ public class PersonalBean implements Serializable{
         todosUsuarios.set(indiceActual, usuarioEditar);
     }
 
+    public void cargarUsuarios(){
+        this.todosUsuarios.clear();
+    }
+    
     public List<Usuario> getTodosUsuarios() {
-        this.todosUsuarios.addAll(this.usuarioFacadeLocal.obtenerUsuarios("A"));
+        this.todosUsuarios.addAll(this.usuarioFacadeLocal.obtenerUsuarios(estadoActual));
         return todosUsuarios;
     }
 
@@ -110,6 +115,21 @@ public class PersonalBean implements Serializable{
     public void setEstadoActual(String estadoActual) {
         this.estadoActual = estadoActual;
     }
-    
+
+    public int getFiltro() {
+        return filtro;
+    }
+
+    public void setFiltro(int filtro) {
+        this.filtro = filtro;
+    }
+
+    public String getTxt() {
+        return txt;
+    }
+
+    public void setTxt(String txt) {
+        this.txt = txt;
+    }
     
 }

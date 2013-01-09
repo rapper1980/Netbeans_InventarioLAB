@@ -81,7 +81,7 @@ public class SolicitudPrestamo implements Serializable {
     private Usuario usuario;
     @JoinColumn(name = "matricula", referencedColumnName = "matricula", nullable = false)
     @ManyToOne(optional = false)
-    private EstudianteEspol matricula;
+    private Prestatario matricula;
 
     public SolicitudPrestamo() {
     }
@@ -170,11 +170,11 @@ public class SolicitudPrestamo implements Serializable {
         this.usuario = usuario;
     }
 
-    public EstudianteEspol getMatricula() {
+    public Prestatario getMatricula() {
         return matricula;
     }
 
-    public void setMatricula(EstudianteEspol matricula) {
+    public void setMatricula(Prestatario matricula) {
         this.matricula = matricula;
     }
 

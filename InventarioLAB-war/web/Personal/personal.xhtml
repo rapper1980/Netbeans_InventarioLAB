@@ -25,17 +25,18 @@
                             </h:selectOneRadio>
                             <rich:message />
                             
-                            <h:selectOneMenu value="#{personalBean.estadoActual}">
+                            <h:selectOneMenu value="#{personalBean.filtro}">
                                 <f:selectItem itemLabel="Matricula" itemValue="1" />
                                 <f:selectItem itemLabel="Idetificacion" itemValue="2" />
                                 <f:selectItem itemLabel="Apellidos" itemValue="3" />
                                 <f:selectItem itemLabel="Nombres" itemValue="4" />
                             </h:selectOneMenu>
-                            <h:inputText />
+                            <h:inputText label="texto" id="texto"
+                                         value="#{personalBean.txt}" />
                             <rich:message />
 
                             <f:facet name="footer">
-                                <h:commandButton value="Buscar" />
+                                <a4j:commandButton render="listaPersonal" value="Buscar" action="#{personalBean.cargarUsuarios()}" />
                             </f:facet>
                         </h:panelGrid>
                     </h:form>
@@ -43,7 +44,7 @@
 
                 <a4j:status onstart="#{rich:component('statPane')}.show()" onstop="#{rich:component('statPane')}.hide()" />
                 <h:form id="form">
-                    <rich:panel header="Lista del Personal">
+                    <rich:panel id="listaPersonalPanel" header="Lista del Personal">
                         <rich:dataTable id="listaPersonal" value="#{personalBean.todosUsuarios}"
                                         var="personal" iterationStatusVar="it" rows="10">
                             <rich:column>
