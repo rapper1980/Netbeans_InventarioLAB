@@ -40,16 +40,19 @@ public class UsuarioManagedBean {
 
     public String iniciarSesion() {
         String res = "main";
-        this.usuarioSesion = this.usuarioFacadeLocal.autenticar(usuarioSesion.getUsuario(), usuarioSesion.getClave());
+        this.usuarioSesion = this.usuarioFacadeLocal.autenticar(usuarioSesion.getUsuario(), usuarioSesion.getClave(), usuarioSesion.getModoAutenticacion());
         if(usuarioSesion == null){
             res = "error";
+            usuarioSesion = new Usuario();
+        } else{
+            this.personaSesion = this.personaFacadeLocal.find(this.usuarioSesion.getIdPersona());
         }
-        this.personaSesion = this.personaFacadeLocal.find(this.usuarioSesion.getIdPersona());
         return res;
     }
 
-    public void salir() {
+    public String salir() {
         //Destruir el Bean
+        return "login";
     }
 
     public Usuario getUsuarioSesion() {

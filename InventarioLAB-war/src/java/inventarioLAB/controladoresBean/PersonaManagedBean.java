@@ -25,14 +25,17 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
 /**
  *
  * @author Edward J. Holguín Holguín
  */
-@ManagedBean(name="personaManagedBean")
+@ManagedBean(name = "personaManagedBean")
 @SessionScoped
 public class PersonaManagedBean {
+
     @EJB
     private PersonaFacadeLocal personaFacadeLocal;
     private Persona personaEditar;
@@ -42,7 +45,6 @@ public class PersonaManagedBean {
     @EJB
     private UsuarioFacadeLocal usuarioFacadeLocal;
     private Usuario usuarioEditar;
-    
     private InformacionEstudianteESPOL infoEstudiante;
 
     /**
@@ -53,26 +55,26 @@ public class PersonaManagedBean {
         this.personaEditar = new Persona();
         this.usuarioFacadeLocal = new UsuarioFacade();
         this.usuarioEditar = new Usuario();
-        
+
         this.estudianteEspolFacadeLocal = new EstudianteEspolFacade();
         this.estudianteEspol = new EstudianteEspol();
-        
+
         this.infoEstudiante = new InformacionEstudianteESPOL();
     }
 
-    public void registrarADMIN(){
+    public void registrarADMIN() {
         Persona persona;
         Usuario usuario;
-        
+
         persona = new Persona();
         usuario = new Usuario();
-        
+
         persona.setTipoIdentificacion("CED");
         persona.setIdentificacion("12345687890");
         persona.setNombres("ADMINISTRADOR");
         persona.setApellidos("ADMIN");
         persona.setFechaNacimiento(new Date());
-        
+
 //        usuario.setPersona(persona);
         usuario.setIdPersona(persona.getIdPersona());
         usuario.setUsuario("admin");
@@ -84,9 +86,9 @@ public class PersonaManagedBean {
         usuario.setFechaIngreso(new Date());
         usuario.setFechaModificacion(new Date());
         usuario.setUsuarioModificacion("admin");
-        
+
 //        persona.setUsuario(usuario);
-        
+
         System.out.println("ANTES");
         try {
             this.personaFacadeLocal.crear(persona);
@@ -124,12 +126,12 @@ public class PersonaManagedBean {
     public void setInfoEstudiante(InformacionEstudianteESPOL infoEstudiante) {
         this.infoEstudiante = infoEstudiante;
     }
-    
+
     public void verificarInfoEstiduante() {
         this.infoEstudiante = this.usuarioFacadeLocal.obtenerInformacionAcademicaEstudianteESPOL(this.infoEstudiante.getIdentificacion(), this.infoEstudiante.getMatricula());
     }
-    
-    public void llenarInfoPersonaEstudianteUsuario(){
+
+    public void llenarInfoPersonaEstudianteUsuario() {
         this.personaEditar.setTipoIdentificacion(this.infoEstudiante.getTipo_identif());
         this.personaEditar.setIdentificacion(this.infoEstudiante.getIdentificacion());
         this.personaEditar.setNombres(this.infoEstudiante.getNombres());
@@ -141,7 +143,7 @@ public class PersonaManagedBean {
 //            Logger.getLogger(PersonaManagedBean.class.getName()).log(Level.SEVERE, null, ex);
             this.personaEditar.setFechaNacimiento(new Date());
         }
-        
+
         this.estudianteEspol.setMatricula(this.infoEstudiante.getMatricula());
         this.estudianteEspol.setCodUnidad(this.infoEstudiante.getUnidadAcademica());
         this.estudianteEspol.setCodDivision(this.infoEstudiante.getDivision());
@@ -149,7 +151,7 @@ public class PersonaManagedBean {
         this.estudianteEspol.setCodEspecializacion(this.infoEstudiante.getEspecializ());
         this.estudianteEspol.setNombreCarrera(this.infoEstudiante.getNombreCarrera());
         this.estudianteEspol.setEmail(this.infoEstudiante.getEmail());
-        
+
         this.usuarioEditar.setUsuario(this.infoEstudiante.getEmail().substring(0, this.infoEstudiante.getEmail().indexOf("@")));
         this.usuarioEditar.setEmail(this.infoEstudiante.getEmail());
         this.usuarioEditar.setEstado("A");
@@ -157,12 +159,21 @@ public class PersonaManagedBean {
 //        this.usuarioEditar.setModoAutenticacion(null);
         this.usuarioEditar.setFechaIngreso(new Date());
         this.usuarioEditar.setFechaModificacion(new Date());
-        this.usuarioEditar.setUsuarioModificacion("admin");
         
-        
+
+        FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+        HttpSession session = (HttpSession) context.getExternalContext().getSession(false);
+        UsuarioManagedBean umb = (UsuarioManagedBean) session.getAttribute("usuarioManagedBean");
+        if(umb == null){
+            this.usuarioEditar.setUsuarioModificacion("admin");
+        }
+        else{
+            this.usuarioEditar.setUsuarioModificacion(umb.getUsuarioSesion().getUsuario());
+        }
+
     }
-    
-    public void registrarUsuario(){
+
+    public void registrarUsuario() {
         llenarInfoPersonaEstudianteUsuario();
         try {
             this.personaFacadeLocal.crear(this.personaEditar);
@@ -171,9 +182,7 @@ public class PersonaManagedBean {
             this.usuarioEditar.setIdPersona(this.personaEditar.getIdPersona());
             this.usuarioFacadeLocal.create(this.usuarioEditar);
         } catch (Exception e) {
-            System.out.println("ERROR Q: "+ e);
+            System.out.println("ERROR Q: " + e);
         }
     }
-    
-
 }

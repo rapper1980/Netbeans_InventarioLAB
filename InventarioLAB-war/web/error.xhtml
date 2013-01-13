@@ -1,12 +1,73 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:rich="http://richfaces.org/rich"
+      >
     <h:head>
-        <title>ERROR!!</title>
+        <title>Login - InvetarioLAB</title>
+        <meta charset="UTF-8" />
+        <meta name="description" content="Proyecto de Inventario" />
+        <meta name="author" content="Edward J. Holguín Holguín" />
+
+        <!-- CSS -->
+        <link rel="stylesheet" type="text/css" href="css/animate-custom.css" />
+        <link rel="stylesheet" type="text/css" href="css/plantilla_login.css" />
     </h:head>
     <h:body>
-        FAIL!
+        <div id="pagina">
+            <div id="cabecera">
+                <div id="cabecera-in-izq">
+                    <div class="logo_FIEC">
+                        <a href="http://fiec.espol.edu.ec" target="_black" rel="Unidad Academica">
+                            <img src="imagenes/FIEC_logo.png" alt="Logo FIEC" width="140" height="44"/>
+                        </a>
+                    </div>
+                    <div class="logo_titulo_FIEC">
+                        <h1>
+                            FIEC<br />
+                            <span class="subtitulo">Faculta de Ingeniería en Electricidad y Computación</span>
+                        </h1>
+                    </div>
+                </div>
+                <div id="cabecera-in-der">
+                    <div class="logo_ESPOL">
+                        <a href="http://espol.edu.ec" target="_black" rel="Unidad Academica">
+                            <img src="imagenes/ESPOL_logo.png" alt="Logo FIEC" width="76" height="75" />
+                        </a>
+                    </div>
+                    <div class="logo_titulo_ESPOL">
+                        <h1>
+                            ESPOL<br />
+                            <span class="subtitulo">Escuela Superior Politécnica del Litoral</span>
+                        </h1>
+                    </div>
+                </div>
+            </div>
+            <div id="cuerpo">
+                <div id="cuerpo-in-izq">
+                    <h2>#{msjs.nombreLaboratorio}</h2>
+                    <h3>InventarioLAB</h3>
+                    <p>#{msjs.bienvenido}</p>
+                </div>
+
+                <div id="cuerpo-in-der">
+                    <div id="formulario_login" class="animate form">
+                        <h:form id="form_login" styleClass="form_login">
+                            <h:outputLabel value="ERROR: Credenciales invalidas" />
+                            <h:link outcome="login"  value="Volver"/>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+            <div id="pie">
+                <p>Desarrolladores:  <span id="j">Jennifer Bermeo</span> | <span id="g">Giani Carlo</span> | <span id="b">Brick Reyes</span> | <span id="e">Edward J. Holguín Holguín</span>
+                    <br />Estudiantes de la <a href="http://espol.edu.ec">Escuela Superior Politecnica de Litoral (ESPOL)</a>
+                    <br />JGBE © 2012. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </h:body>
 </html>
 

@@ -4,6 +4,7 @@
  */
 package inventarioLAB.presentacionBeans;
 
+import inventarioLAB.controladoresBean.UsuarioManagedBean;
 import inventarioLAB.entidades.EstudianteEspol;
 import inventarioLAB.entidades.Persona;
 import inventarioLAB.entidades.Usuario;
@@ -17,7 +18,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -56,11 +59,20 @@ public class PersonalBean implements Serializable{
     }
     
     public void eliminar() {
-        todosUsuarios.remove(todosUsuarios.get(indiceActual));
+        if ("I".equalsIgnoreCase(usuarioEditar.getEstado())){
+            usuarioEditar.setEstado("A");
+        }
+        else {
+            usuarioEditar.setEstado("I");
+        }
+        
+        this.usuarioFacadeLocal.edit(usuarioEditar);
+        getTodosUsuarios();
     }
  
     public void grabar() {
-        todosUsuarios.set(indiceActual, usuarioEditar);
+        this.usuarioFacadeLocal.edit(usuarioEditar);
+        getTodosUsuarios();
     }
 
     public void cargarUsuarios(){
@@ -68,6 +80,7 @@ public class PersonalBean implements Serializable{
     }
     
     public List<Usuario> getTodosUsuarios() {
+        this.todosUsuarios.clear();
         this.todosUsuarios.addAll(this.usuarioFacadeLocal.obtenerUsuarios(estadoActual));
         return todosUsuarios;
     }
@@ -130,6 +143,12 @@ public class PersonalBean implements Serializable{
 
     public void setTxt(String txt) {
         this.txt = txt;
+    }
+    
+    public String salir(){
+        FacesContext context = javax.faces.context.FacesContext.getCurrentInstance();
+        context.getExternalContext().getSessionMap().remove("usuarioManagedBean");
+        return "login";
     }
     
 }

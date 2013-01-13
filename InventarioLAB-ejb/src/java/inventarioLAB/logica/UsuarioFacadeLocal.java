@@ -40,7 +40,7 @@ public interface UsuarioFacadeLocal {
     
     List<Usuario> obtenerUsuarios(String rol, String estado);
     
-    Usuario autenticar(String usuario, String Clave);
+    Usuario autenticar(String usuario, String clave, String modoAutenticacion);
     
     boolean existeSuperUsuario();
 

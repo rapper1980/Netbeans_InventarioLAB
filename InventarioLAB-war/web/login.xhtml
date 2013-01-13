@@ -61,9 +61,9 @@
                             <rich:validator>
                                 <h2> Log In </h2>
                                 <div>
-                                    <h:outputLabel id="lab_usuario" styleClass="lab_usuario" for="inp_usuario" value="Usuario"></h:outputLabel>
-                                    <h:inputText id="inp_usuario" styleClass="inp_usuario" required="true" requiredMessage="Ingrese usuario ESPOL/Invetario" value="#{usuarioManagedBean.usuarioSesion.usuario}"></h:inputText>
-                                    <h:outputLabel value="@espol.edu.ec"></h:outputLabel>
+                                    <h:outputLabel id="lab_usuario" styleClass="lab_usuario" for="inp_usuario" value="Usuario" />
+                                    <h:inputText id="inp_usuario" styleClass="inp_usuario" required="true" requiredMessage="Ingrese usuario ESPOL/Invetario" value="#{usuarioManagedBean.usuarioSesion.usuario}" />
+                                    <h:outputLabel value="@espol.edu.ec" />
                                 </div>
                                 <div>
                                     <h:outputLabel id="lab_clave" styleClass="lab_clave" for="inp_clave" value="Clave"></h:outputLabel>
@@ -78,7 +78,7 @@
                                 </div>
                                 <div>
                                     <a class="a_olvidar" href="http://espol.edu.ec">¿Olvidastes tu contraseña?</a>
-                                    <h:commandButton styleClass="btn_login" value="Login" action="#{usuarioManagedBean.iniciarSesion()}"></h:commandButton>
+                                    <h:commandButton styleClass="btn_login" value="Login" action="#{usuarioManagedBean.iniciarSesion()}" />
                                 </div>
                                 <div class="change_link">
                                     Not a member yet ?
@@ -87,6 +87,9 @@
                             </rich:validator>
                             <rich:notifyMessages stayTime="2000" nonblocking="true" />
                         </h:form>
+                        
+                        <rich:notifyStack id="firstStack" position="topLeft" direction="vertical" method="first" />
+                        <rich:notify id="firstNotify" stack="firstStack" summary="&lt;b&gt;&#35;#{notifyBean.topLeftCounter}&lt;/b&gt;" />
                     </div>
                     <div id="formulario_registrar" class="animate form">
                         <h:form id="form_registrar" styleClass="form_login">

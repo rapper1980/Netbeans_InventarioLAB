@@ -24,7 +24,7 @@
                                 <f:selectItem itemLabel="Inactivos" itemValue="I" />
                             </h:selectOneRadio>
                             <rich:message />
-                            
+
                             <h:selectOneMenu value="#{personalBean.filtro}">
                                 <f:selectItem itemLabel="Matricula" itemValue="1" />
                                 <f:selectItem itemLabel="Idetificacion" itemValue="2" />
@@ -79,7 +79,7 @@
                                 <f:facet name="header">Email</f:facet>
                                 #{personal.email}
                             </rich:column>
-                            
+
                             <rich:column>
                                 <f:facet name="header">Opciones</f:facet>
                                 <a4j:commandLink styleClass="no-decor" render="editGrid" execute="@this"
@@ -92,6 +92,7 @@
                                                  oncomplete="#{rich:component('confirmPane')}.show()">
                                     <h:graphicImage value="../imagenes/tools/delete.gif" alt="delete" />
                                     <a4j:param value="#{it.index}" assignTo="#{personalBean.indiceActual}" />
+                                    <f:setPropertyActionListener target="#{personalBean.usuarioEditar}" value="#{personal}" />
                                 </a4j:commandLink>
                             </rich:column>
                             <f:facet name="footer">
@@ -100,7 +101,7 @@
                         </rich:dataTable>
 
                     </rich:panel>
-                    <a4j:jsFunction name="eliminar" action="#{personalBean.eliminar()}" render="table" execute="@this"
+                    <a4j:jsFunction name="eliminar" action="#{personalBean.eliminar()}" render="listaPersonal" execute="@this"
                                     oncomplete="#{rich:component('confirmPane')}.hide();" />
 
                     <rich:popupPanel id="statPane" autosized="true">
@@ -109,7 +110,7 @@
                     </rich:popupPanel>
 
                     <rich:popupPanel id="confirmPane" autosized="true">
-                        ¿Esta seguro de eliminar el registro?
+                        ¿Esta seguro de eliminar el registro? else Reactivar
                         <a4j:commandButton value="Cancelar" onclick="#{rich:component('confirmPane')}.hide(); return false;" />
                         <a4j:commandButton value="Eliminar" onclick="eliminar(); return false;" />
                     </rich:popupPanel>
@@ -118,32 +119,19 @@
                     <rich:popupPanel header="Editar usuario" id="editPane" domElementAttachment="parent" width="400" height="170">
                         <h:panelGrid columns="3" id="editGrid">
                             <h:outputText value="Usuario" />
-                            <h:outputText value="#{personalBean.usuarioEditar.idPersona.nombres}" />
+                            <h:outputText value="#{personalBean.usuarioEditar.usuario}" />
                             <h:panelGroup />
-                            <h:outputText value="Apellid" />
-                            <h:outputText value="#{personalBean.usuarioEditar.idPersona.apellidos}" />
+                            <h:outputText value="Nombres Completo" />
+                            <h:outputText value="#{personalBean.usuarioEditar.persona.nombres} #{personalBean.usuarioEditar.persona.apellidos}" />
                             <h:panelGroup />
-                            <h:outputText value="Email" />
-                            <h:inputText value="#{personalBean.usuarioEditar.idPersona.estudianteEspol.email}" required="true" requiredMessage="Price is required" id="price"
-                                         converterMessage="Should be a valid price" validatorMessage="Should be a valid price" label="Price field">
-                                <f:validateDoubleRange minimum="0.00" maximum="99999999"/>
-                            </h:inputText>
-                            <rich:message id="priceMsg" for="price" />
-                            <h:outputText value="Mileage" />
-                            <h:inputText value="#{personalBean.usuarioEditar.idPersona.estudianteEspol.email}" id="mage" converterMessage="Should be a valid mileage"
-                                         validatorMessage="Should be a valid mileage" label="Mileage field">
-                                <f:validateDoubleRange minimum="0.00" maximum="99999999.00" />
-                            </h:inputText>
-                            <rich:message id="madeMsg" for="mage" />
-                            <h:outputText value="VIN" />
-                            <h:inputText value="#{personalBean.usuarioEditar.idPersona.estudianteEspol.email}" id="vin" required="true"
-                                         validatorMessage="Not a valid 17-digit VIN" converterMessage="Not a valid 17-digit VIN"
-                                         requiredMessage="VIN is required">
-                                <f:validateLength minimum="17" maximum="17" />
-                            </h:inputText>
-                            <rich:message id="vinMsg" for="vin" />
+                            <h:outputText value="Rol de Usuario" />
+                            <h:selectOneMenu id="idRol" value="#{personalBean.usuarioEditar.rol}" title="Roles" required="true" requiredMessage="Elegir Rol">
+                                <f:selectItem itemLabel="Super Usuario" itemValue="SPU" />
+                                <f:selectItem itemLabel="Usuario Ayudate" itemValue="USE" />
+                            </h:selectOneMenu>
+                            <h:panelGroup />
                         </h:panelGrid>
-                        <a4j:commandButton value="Grabar" action="#{personalBean.grabar()}" render="table" execute="editPane"
+                        <a4j:commandButton value="Grabar" action="#{personalBean.grabar()}" render="listaPersonal" execute="editPane"
                                            oncomplete="if (#{facesContext.maximumSeverity==null}) {#{rich:component('editPane')}.hide();}" />
                         <a4j:commandButton value="Cancelar" onclick="#{rich:component('editPane')}.hide(); return false;" />
                     </rich:popupPanel>

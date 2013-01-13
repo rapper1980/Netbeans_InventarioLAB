@@ -3,9 +3,9 @@
 <!-- =========== FULL CONFIGURATION FILE ================================== -->
 
 <faces-config version="2.0"
-    xmlns="http://java.sun.com/xml/ns/javaee" 
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+              xmlns="http://java.sun.com/xml/ns/javaee" 
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+              xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
     <application>
         <locale-config>
@@ -25,28 +25,54 @@
             <base-name>/Bundle</base-name>
             <var>bundle</var>
         </resource-bundle>
+        <!-- Ed Navigation-->
         <navigation-rule>
-		<from-view-id>/*</from-view-id>
-		<navigation-case>
-			<from-outcome>gestionEquipo</from-outcome>
-			<to-view-id>/Equipo/equipo.xhtml</to-view-id>
-                        <redirect/>
-		</navigation-case>
-		<navigation-case>
-			<from-outcome>gestionTipoEquipo</from-outcome>
-			<to-view-id>/Equipo/tipoEquipo.xhtml</to-view-id>
-                        <redirect/>
-		</navigation-case>
-                <navigation-case>
-			<from-outcome>registrarPersonal</from-outcome>
-			<to-view-id>/registrarPersonal.xhtml</to-view-id>
-                        <redirect/>
-		</navigation-case>
-                <navigation-case>
-			<from-outcome>gestionPersonal</from-outcome>
-			<to-view-id>/personal.xhtml</to-view-id>
-                        <redirect/>
-		</navigation-case>
-	</navigation-rule>
+            <from-view-id>/login.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>main</from-outcome>
+                <to-view-id>/main.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>/login.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>error</from-outcome>
+                <to-view-id>/error.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>/main.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>personal</from-outcome>
+                <to-view-id>/Personal/personal.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>/main.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>registarPersonal</from-outcome>
+                <to-view-id>/Personal/registrarPersonal.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>/main.xhtml</from-view-id>
+            <navigation-case>
+                <from-outcome>login</from-outcome>
+                <to-view-id>/login.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+        
+        <navigation-rule>
+            <from-view-id>Personal/*</from-view-id>
+            <navigation-case>
+                <from-outcome>login</from-outcome>
+                <to-view-id>/login.xhtml</to-view-id>
+            </navigation-case>
+        </navigation-rule>
+
     </application>
 </faces-config>
